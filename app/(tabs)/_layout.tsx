@@ -17,7 +17,8 @@ export default function RootLayout() {
       }}
     >
       <Tabs.Screen name="index" options={{
-        title:'Accueil',
+        tabBarLabel:'Accueil',
+        title: 'Pont Tournant de Cherbourg',
         tabBarIcon: ({color, focused}) => (
           <Ionicons name={focused ? 'home-sharp' : 'home-outline'} color={color} size={24} />
         ), }}
