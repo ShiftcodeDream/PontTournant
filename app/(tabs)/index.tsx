@@ -5,7 +5,6 @@ export default function Index() {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Salut!</Text>
-      <Link href="/about" style={styles.button}>Aide</Link>
     </View>
   );
 }
