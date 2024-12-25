@@ -1,40 +1,51 @@
 import {JSX, useEffect, useState} from "react";
-import {Text, View, StyleSheet, Pressable} from "react-native";
-import dayjs, {Dayjs} from "dayjs";
+import {StyleSheet, Animated, SafeAreaView, RefreshControl} from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import ScrollView = Animated.ScrollView;
+import {Dayjs} from "dayjs";
 import getMareeData from "@/components/MareeApi";
 import DayTitle from '@/components/DayTitle';
 import DisplayHour from "@/components/DisplayHour";
 
-const url = 'https://www.horaire-maree.fr/maree/CHERBOURG/';
-
 export default function Index() {
   useEffect(refresh, []);
   const [horaires, setHoraires] = useState(new Array<Dayjs>);
+  const [loading, setLoading] = useState(false);
 
   function refresh() {
-    getMareeData().then(setHoraires);
+    setLoading(true);
+    getMareeData().then(data => {
+      setHoraires(data);
+      setLoading(false);
+    });
   }
 
-  function makeList(values: Array<Dayjs>) {
+  function makeList(values: Array<Dayjs>): JSX.Element[] {
     let old = 0;
     let result: JSX.Element[] = [];
-    values.forEach(v => {
+    values.forEach((v,i) => {
       if(old != v.get('date'))
-        result.push((
-          <DayTitle day={v} />
-        ));
+        result.push(
+          <DayTitle day={v} key={'d'+i} />
+        );
       old = v.get('date');
       result.push(
-        <Text style={styles.text}>{v.format('H:mm')}</Text>
+        <DisplayHour heure={v} key={'h'+i} />
       );
     });
     return result;
   }
+
   return (
-    <View style={styles.container}>
-      {makeList(horaires)}
-      <Pressable onPress={refresh}><Text style={styles.button}>Relancer</Text></Pressable>
-    </View>
+    <SafeAreaProvider>
+      <SafeAreaView>
+        <ScrollView contentContainerStyle={styles.container}
+        refreshControl={<RefreshControl refreshing={loading} onRefresh={refresh} />}
+        >
+          {makeList(horaires)}
+        </ScrollView>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 

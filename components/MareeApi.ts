@@ -1,6 +1,8 @@
 import {Dayjs}from "dayjs";
 import dayjs from "dayjs";
 
+const url = 'https://www.horaire-maree.fr/maree/CHERBOURG/';
+
 const MOCKUP = `
 <!DOCTYPE HTML>
 <html lang="fr">
@@ -442,7 +444,7 @@ export default function getMareeData(): Promise<Array<Dayjs>>{
   // Basic mockup
   return new Promise<string>((ok,ko) => ok(MOCKUP))
     .then(resp => {
-      let today, result: Array<Dayjs> = [];
+      let today:Dayjs, data:string|null, cells:Array<string>, result: Array<Dayjs> = [];
       // Removes accents to remove UTF-8 multibyte characters
       const texte = resp.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
       // Extracts "today" value
@@ -453,19 +455,40 @@ export default function getMareeData(): Promise<Array<Dayjs>>{
       today = fromTextualDate(strToday);
 
       // Extracts today tide values
-      let dayData = extractBetween('<div id="i_donnesJour">', '</div>', texte);
-      if (dayData === null)
-        return [];
-      let allCells = splitBetween('<strong>', '</strong>', dayData);
+      data = extractBetween('<div id="i_donnesJour">', '</div>', texte);
+      if (data !== null) {
+        cells = splitBetween('<strong>', '</strong>', data);
 
-      [10, 12].forEach(i => {
-        if(allCells[i].length > 0) {
-          const v = allCells[i].trim().split('h').map(k=>parseInt(k));
-          let pleineMer = today.hour(v[0]).minute(v[1]);
-          result.push(pleineMer.add(-1, 'hour'));
-          result.push(pleineMer.add(1, 'hour'));
+        [10, 12].forEach(i => {
+          if (cells[i].length > 0) {
+            const v = cells[i].trim().split('h').map(k => parseInt(k));
+            let pleineMer = today.hour(v[0]).minute(v[1]);
+            if(pleineMer.isValid()) {
+              result.push(pleineMer.add(-1, 'hour'));
+              result.push(pleineMer.add(1, 'hour'));
+            }
+          }
+        });
+      }
+
+      // Extracts other days tides
+      data = extractBetween('<div id="i_donnesLongue">', '</div>', texte);
+      if (data != null) {
+        cells = splitBetween('<strong>', '</strong>', data);
+        for(let j=3; j<cells.length; j+=7){
+          today = today.add(1, 'day');
+          [j, j+3].forEach(i => {
+            if (cells[i].length > 0) {
+              const v = cells[i].trim().split('h').map(k => parseInt(k));
+              let pleineMer = today.hour(v[0]).minute(v[1]);
+              if(pleineMer.isValid()) {
+                result.push(pleineMer.add(-1, 'hour'));
+                result.push(pleineMer.add(1, 'hour'));
+              }
+            }
+          })
         }
-      });
+      }
       return result;
     })
 }
