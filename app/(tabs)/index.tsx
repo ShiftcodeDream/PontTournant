@@ -1,31 +1,38 @@
+import {JSX, useEffect, useState} from "react";
 import {Text, View, StyleSheet, Pressable} from "react-native";
-import { Link } from 'expo-router';
+import dayjs, {Dayjs} from "dayjs";
+import getMareeData from "@/components/MareeApi";
 import DayTitle from '@/components/DayTitle';
 import DisplayHour from "@/components/DisplayHour";
-import dayjs, {Dayjs} from "dayjs";
-import {useEffect} from "react";
 
-const url = 'http://localhost/marees.html';
+const url = 'https://www.horaire-maree.fr/maree/CHERBOURG/';
 
 export default function Index() {
   useEffect(refresh, []);
-  function refresh(){
-    fetch(url, {method: 'get'}).then(resp => {
-      console.log(resp);
-    }).catch(e=>console.log(e));
+  const [horaires, setHoraires] = useState(new Array<Dayjs>);
+
+  function refresh() {
+    getMareeData().then(setHoraires);
+  }
+
+  function makeList(values: Array<Dayjs>) {
+    let old = 0;
+    let result: JSX.Element[] = [];
+    values.forEach(v => {
+      if(old != v.get('date'))
+        result.push((
+          <DayTitle day={v} />
+        ));
+      old = v.get('date');
+      result.push(
+        <Text style={styles.text}>{v.format('H:mm')}</Text>
+      );
+    });
+    return result;
   }
   return (
     <View style={styles.container}>
-      <DayTitle day={dayjs()} />
-      <DisplayHour heure={dayjs().add(-25, 'minutes')} />
-      <DisplayHour heure={dayjs()} actif/>
-      <DisplayHour heure={dayjs()} />
-
-      <DayTitle day={dayjs()} />
-      <DisplayHour heure={dayjs()} />
-      <DisplayHour heure={dayjs()} actif/>
-      <DisplayHour heure={dayjs()} />
-
+      {makeList(horaires)}
       <Pressable onPress={refresh}><Text style={styles.button}>Relancer</Text></Pressable>
     </View>
   );
@@ -39,6 +46,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   titre: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 24,
+  },
+  text: {
     color: '#fff',
     fontSize: 24,
   },
