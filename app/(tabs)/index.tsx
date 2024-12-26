@@ -1,8 +1,10 @@
 import {JSX, useEffect, useState} from "react";
-import {StyleSheet, Animated, SafeAreaView, RefreshControl} from "react-native";
+import {Animated, SafeAreaView, RefreshControl} from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import ScrollView = Animated.ScrollView;
 import {Dayjs} from "dayjs";
+
+import styles from "@/components/GlobalStyle";
 import getMareeData from "@/components/MareeApi";
 import DayTitle from '@/components/DayTitle';
 import DisplayHour from "@/components/DisplayHour";
@@ -30,7 +32,7 @@ export default function Index() {
         );
       old = v.get('date');
       result.push(
-        <DisplayHour heure={v} key={'h'+i} />
+        <DisplayHour heure={v} key={'h'+i} actif={i%3==1} next={i%5==2}/>
       );
     });
     return result;
@@ -48,29 +50,3 @@ export default function Index() {
     </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#25292e',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  titre: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 24,
-  },
-  text: {
-    color: '#fff',
-    fontSize: 24,
-  },
-  button: {
-    fontSize: 20,
-    borderWidth: 2,
-    borderColor: '#ddd',
-    color: '#fff',
-    padding: 5,
-    marginTop: 5,
-  },
-});

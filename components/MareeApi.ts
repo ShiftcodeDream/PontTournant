@@ -458,17 +458,8 @@ export default function getMareeData(): Promise<Array<Dayjs>>{
       data = extractBetween('<div id="i_donnesJour">', '</div>', texte);
       if (data !== null) {
         cells = splitBetween('<strong>', '</strong>', data);
-
-        [10, 12].forEach(i => {
-          if (cells[i].length > 0) {
-            const v = cells[i].trim().split('h').map(k => parseInt(k));
-            let pleineMer = today.hour(v[0]).minute(v[1]);
-            if(pleineMer.isValid()) {
-              result.push(pleineMer.add(-1, 'hour'));
-              result.push(pleineMer.add(1, 'hour'));
-            }
-          }
-        });
+        if(cells.length>12)
+          [10, 12].forEach(addTide);
       }
 
       // Extracts other days tides
@@ -477,16 +468,18 @@ export default function getMareeData(): Promise<Array<Dayjs>>{
         cells = splitBetween('<strong>', '</strong>', data);
         for(let j=3; j<cells.length; j+=7){
           today = today.add(1, 'day');
-          [j, j+3].forEach(i => {
-            if (cells[i].length > 0) {
-              const v = cells[i].trim().split('h').map(k => parseInt(k));
-              let pleineMer = today.hour(v[0]).minute(v[1]);
-              if(pleineMer.isValid()) {
-                result.push(pleineMer.add(-1, 'hour'));
-                result.push(pleineMer.add(1, 'hour'));
-              }
-            }
-          })
+          [j, j+3].forEach(addTide);
+        }
+      }
+
+      function addTide(i:number){
+        if (cells[i].length > 0) {
+          const v = cells[i].trim().split('h').map(k => parseInt(k));
+          let pleineMer = today.hour(v[0]).minute(v[1]);
+          if(pleineMer.isValid()) {
+            result.push(pleineMer.add(-1, 'hour'));
+            result.push(pleineMer.add(1, 'hour'));
+          }
         }
       }
       return result;

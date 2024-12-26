@@ -1,19 +1,16 @@
 import { Tabs } from "expo-router";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import styles from "@/components/GlobalStyle";
 
 export default function RootLayout() {
   return (
     <Tabs screenOptions={{
-        tabBarActiveTintColor: '#0569FF',
-        headerStyle: {
-          backgroundColor: '#25292e',
-        },
-        headerShadowVisible: false,
-        headerTintColor: '#fff',
-        tabBarStyle: {
-          backgroundColor: '#25292e',
-        },
+        tabBarActiveTintColor: styles.tabBar.color,
+        headerStyle: styles.titleBar,
+        headerShadowVisible: true,
+        headerTintColor: styles.titleBar.color,
+        tabBarStyle: styles.tabBar,
       }}
     >
       <Tabs.Screen name="index" options={{

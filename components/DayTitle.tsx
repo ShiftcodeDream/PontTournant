@@ -1,7 +1,10 @@
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View } from "react-native";
 import {Dayjs} from "dayjs";
 import dayjs from "dayjs";
 import 'dayjs/locale/fr';
+
+import styles from "@/components/GlobalStyle";
+import {firstUpperCase} from "@/components/Utils";
 
 dayjs.locale('fr');
 
@@ -11,20 +14,10 @@ type Props ={
 
 export default function DayTitle({day}: Props){
   return (
-    <View style={styles.view}>
-      <Text style={styles.text}>
-        {day.format('dddd D MMMM YYYY')}
+    <View>
+      <Text style={styles.day}>
+        {firstUpperCase(day.format('dddd D MMMM YYYY'))}
       </Text>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  view: {
-
-  },
-  text: {
-    color: '#ffe',
-    fontSize: 24,
-  }
-});
