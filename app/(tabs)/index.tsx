@@ -2,7 +2,7 @@ import {JSX, useEffect, useState} from "react";
 import {Animated, SafeAreaView, RefreshControl} from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import ScrollView = Animated.ScrollView;
-import {Dayjs} from "dayjs";
+import dayjs, {Dayjs} from "dayjs";
 
 import styles from "@/components/GlobalStyle";
 import getMareeData from "@/components/MareeApi";
@@ -23,16 +23,27 @@ export default function Index() {
   }
 
   function makeList(values: Array<Dayjs>): JSX.Element[] {
-    let old = 0;
+    let old = 0, next=false, nextDetected=false, actif=false;
+    const now = dayjs();
     let result: JSX.Element[] = [];
     values.forEach((v,i) => {
-      if(old != v.get('date'))
+      // Date change detection
+      if(old != v.get('date')) {
         result.push(
-          <DayTitle day={v} key={'d'+i} />
+          <DayTitle day={v} key={'d' + i}/>
         );
+      }
       old = v.get('date');
+      // Next & active movements detection
+      next=false;
+      if(!nextDetected && v.isAfter(now)){
+        next = true;
+        nextDetected = true;
+      }
+      actif = (now.isAfter(v.add(-2, 'minute')) && now.isBefore(v.add(15,'minute')));
+      // Finally, display time
       result.push(
-        <DisplayHour heure={v} key={'h'+i} actif={i%3==1} next={i%5==2}/>
+        <DisplayHour heure={v} key={'h'+i} actif={actif} next={next}/>
       );
     });
     return result;
