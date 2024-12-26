@@ -1,56 +1,45 @@
 import {StyleSheet} from "react-native";
 
 export default StyleSheet.create({
+  /* Entete en haut de l'écran */
+  titleBar: {
+    backgroundColor: '#082345',
+    color: '#d0efff',
+  },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#0e2b51',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  /* Entete en haut de l'écran */
-  titleBar: {
-    backgroundColor: '#0569FF',
-    color: '#d0efff',
-  },
-  button: {
-    fontSize: 20,
-    borderWidth: 2,
-    borderColor: '#ddd',
-    color: '#fff',
-    padding: 5,
-    marginTop: 5,
-  },
   /* Barre d'onglets en bas de l'écran */
   tabBar: {
-    backgroundColor: '#d0efff',
-    color: '#0569FF',
+    backgroundColor: '#082345',
+    color: '#4891fa',
   },
   /* Affichage du jour */
   day: {
-    color: '#2743d1',
+    color: '#eeb',
     fontWeight: 'bold',
     fontSize: 24,
     paddingTop: 5,
   },
   /* Affichage d'un horaire */
   horaireView: {
-    width: '50%',
+    // width: '50%',
   },
   horaire: {
     fontSize: 24,
-    fontWeight: 'bold',
     textAlign: 'center',
-    borderStyle: 'solid',
-    borderWidth: 2,
-    borderColor: '#ddd',
-    borderRadius: 7,
-    marginTop: 5,
-    padding: 5,
+    marginTop: 15,
+    color: '#eeb',
   },
   horaireActif: {
-    borderColor: '#ff05b0',
+    borderBottomColor: '#dd46ad',
+    borderBottomWidth: 3,
   },
   horaireNext: {
-    borderColor: '#2cbf20',
+    borderBottomColor: '#2da823',
+    borderBottomWidth: 3,
   }
 });
