@@ -7,7 +7,6 @@ export default StyleSheet.create({
     color: '#d0efff',
   },
   container: {
-    flex: 1,
     backgroundColor: '#0e2b51',
     alignItems: 'center',
     justifyContent: 'center',
@@ -41,5 +40,21 @@ export default StyleSheet.create({
   horaireNext: {
     borderBottomColor: '#2da823',
     borderBottomWidth: 3,
+  },
+  // Ecran infos
+  titre: {
+    color: '#4891fa',
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+  text: {
+    color: '#eeb',
+    fontSize: 16,
+    textAlign: 'justify',
+    padding: 10,
+  },
+  link: {
+    fontSize: 16,
+    color: '#9a61bf',
   }
 });
