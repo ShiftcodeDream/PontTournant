@@ -62,10 +62,12 @@ export default StyleSheet.create({
     backgroundColor: '#fff',
     color: '#000',
     fontSize: 16,
+    fontWeight: 'bold',
     minWidth: 40,
     borderWidth: 1,
     borderColor: '#eeb',
     margin: 6,
+    textAlign: 'center',
   },
   wideButton: {
     width: '100%',
@@ -76,5 +78,21 @@ export default StyleSheet.create({
     textAlign: 'center',
     color: '#eeb',
     fontSize: 24,
-  }
+  },
+  roundedButtonContainer: {
+    width: 30,
+    height: 30,
+    backgroundColor: '#0e2b51',
+  },
+  roundedButton: {
+    borderColor: '#d0efff',
+    borderWidth: 0,
+    borderRadius: 30,
+  },
+  roundedButtonText: {
+    fontWeight: 'bold',
+    fontSize: 24,
+    color: '#d0efff',
+    textAlign: 'center',
+  },
 });
