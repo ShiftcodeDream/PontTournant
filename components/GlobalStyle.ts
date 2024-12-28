@@ -56,5 +56,25 @@ export default StyleSheet.create({
   link: {
     fontSize: 16,
     color: '#9a61bf',
+  },
+  // Champs de saisie de texte
+  input: {
+    backgroundColor: '#fff',
+    color: '#000',
+    fontSize: 16,
+    minWidth: 40,
+    borderWidth: 1,
+    borderColor: '#eeb',
+    margin: 6,
+  },
+  wideButton: {
+    width: '100%',
+    borderColor: '#d0efff',
+    borderWidth: 2,
+  },
+  buttonText: {
+    textAlign: 'center',
+    color: '#eeb',
+    fontSize: 24,
   }
 });
