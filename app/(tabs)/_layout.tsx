@@ -1,15 +1,15 @@
 import { Tabs } from "expo-router";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import styles from "@/components/GlobalStyle";
+import styles, { theme } from "@/components/GlobalStyle";
 
 export default function RootLayout() {
   return (
     <Tabs screenOptions={{
-        tabBarActiveTintColor: styles.tabBar.color,
+        tabBarActiveTintColor: theme.prim,
         headerStyle: styles.titleBar,
         headerShadowVisible: true,
-        headerTintColor: styles.titleBar.color,
+        headerTintColor: theme.fg,
         tabBarStyle: styles.tabBar,
       }}
     >

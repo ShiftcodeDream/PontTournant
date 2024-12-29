@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 
 import {clamp} from "@/components/Utils";
 import RoundedButton from "@/components/ui/RoundedButton";
-import styles from "@/components/GlobalStyle";
+import styles, {theme} from "@/components/GlobalStyle";
 import { ParamStorage } from "@/components/ParamStorage";
 
 export default function Index() {
@@ -76,8 +76,7 @@ export default function Index() {
           <Text style={styles.text}>Activer les notifications</Text>
           <Switch
             trackColor={{false: '#fff', true: '#fff'}}
-            thumbColor={enableNotif ? '#4891fa' : '#d0efff'}
-            ios_backgroundColor="#3e3e3e"
+            thumbColor={enableNotif ? theme.link : theme.sec}
             onValueChange={toggleEnableNotif}
             value={enableNotif}
           />

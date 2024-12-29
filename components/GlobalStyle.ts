@@ -1,60 +1,70 @@
 import {StyleSheet} from "react-native";
 
+const t = {
+  bg      : '#0e2b51',
+  fg      : '#d0efff',
+  prim    : '#4891fa',
+  sec     : '#eeb',
+  danger  : '#dd46ad',
+  success : '#2da823',
+  link    : '#9a61bf',
+  bgdark  : '#082345',
+}
+export const theme = t;
+
 export default StyleSheet.create({
   /* Entete en haut de l'écran */
   titleBar: {
-    backgroundColor: '#082345',
-    color: '#d0efff',
+    backgroundColor: t.bgdark,
   },
   container: {
-    backgroundColor: '#0e2b51',
+    backgroundColor: t.bg,
     alignItems: 'center',
     justifyContent: 'center',
   },
   /* Barre d'onglets en bas de l'écran */
   tabBar: {
-    backgroundColor: '#082345',
-    color: '#4891fa',
+    backgroundColor: t.bg,
+    color: t.prim,
   },
   /* Affichage du jour */
   day: {
-    color: '#eeb',
+    color: t.sec,
     fontWeight: 'bold',
     fontSize: 24,
     paddingTop: 5,
   },
   /* Affichage d'un horaire */
   horaireView: {
-    // width: '50%',
   },
   horaire: {
     fontSize: 24,
     textAlign: 'center',
     marginTop: 15,
-    color: '#eeb',
+    color: t.fg,
   },
   horaireActif: {
-    borderBottomColor: '#dd46ad',
+    borderBottomColor: t.danger,
     borderBottomWidth: 3,
   },
   horaireNext: {
-    borderBottomColor: '#2da823',
+    borderBottomColor: t.success,
     borderBottomWidth: 3,
   },
   // Ecran infos
   titre: {
-    color: '#4891fa',
+    color: t.prim,
     fontSize: 24,
     fontWeight: 'bold',
   },
   text: {
-    color: '#eeb',
+    color: t.fg,
     fontSize: 16,
     padding: 10,
   },
   link: {
     fontSize: 16,
-    color: '#9a61bf',
+    color: t.link,
   },
   // Champs de saisie de texte
   input: {
@@ -63,34 +73,33 @@ export default StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     borderWidth: 1,
-    borderColor: '#eeb',
+    borderColor: t.sec,
     margin: 6,
     textAlign: 'center',
   },
   wideButton: {
     width: '100%',
-    borderColor: '#d0efff',
+    backgroundColor: t.prim,
+    borderColor: t.fg,
     borderWidth: 2,
   },
   buttonText: {
     textAlign: 'center',
-    color: '#eeb',
+    color: t.sec,
     fontSize: 24,
   },
   roundedButtonContainer: {
     width: 30,
     height: 30,
-    backgroundColor: '#0e2b51',
+    backgroundColor: t.bg,
   },
   roundedButton: {
-    borderColor: '#d0efff',
     borderWidth: 0,
-    borderRadius: 30,
   },
   roundedButtonText: {
     fontWeight: 'bold',
     fontSize: 24,
-    color: '#d0efff',
+    color: t.fg,
     textAlign: 'center',
   },
 });
