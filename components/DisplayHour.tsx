@@ -1,7 +1,6 @@
-import {Text, View, StyleSheet} from "react-native";
+import {Text, View, StyleSheet, StyleProp, TextStyle} from "react-native";
 import {Dayjs} from "dayjs";
 import styles from "@/components/GlobalStyle";
-import {StyleProps} from "react-native-reanimated";
 
 type Props = {
   heure: Dayjs,
@@ -17,7 +16,7 @@ type Props = {
  * @constructor
  */
 export default function DisplayHour({heure, next=false, actif=false}: Props) {
-  const st: StyleProps = StyleSheet.compose(styles.horaire,
+  const st: StyleProp<TextStyle> = StyleSheet.compose(styles.horaire,
     actif ? styles.horaireActif :
       next ? styles.horaireNext :
         {}
