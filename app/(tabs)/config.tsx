@@ -1,10 +1,10 @@
 import {Text, TextInput, View, StyleSheet, Switch} from "react-native";
 import {useEffect, useState} from "react";
-import AsyncStorage from 'expo-sqlite/kv-store';
 
 import {clamp} from "@/components/Utils";
 import RoundedButton from "@/components/ui/RoundedButton";
 import styles from "@/components/GlobalStyle";
+import { ParamStorage } from "@/components/ParamStorage";
 
 export default function Index() {
   const [timing, setTiming] = useState('10');
@@ -14,13 +14,13 @@ export default function Index() {
   const INCREMENT = 5;
 
   useEffect(()=>{
-    AsyncStorage.getItem('notificationEnabled').then(r => {
+    ParamStorage.getItem('notificationEnabled').then(r => {
       setEnableNotif(r === 'true');
     });
-    AsyncStorage.getItem('notificationTiming').then(r => {
+    ParamStorage.getItem('notificationTiming').then(r => {
       if(r === null || isNaN(parseInt(r))){
         r = '10';
-        AsyncStorage.setItem('notificationTiming', r);
+        ParamStorage.setItem('notificationTiming', r);
       }
       setTiming(r);
     });
@@ -28,7 +28,7 @@ export default function Index() {
 
   function toggleEnableNotif(){
     setEnableNotif(v => {
-      AsyncStorage.setItem('notificationEnabled', !v ? 'true' : 'false');
+      ParamStorage.setItem('notificationEnabled', !v ? 'true' : 'false');
       return !v;
     })
   }
@@ -44,7 +44,7 @@ export default function Index() {
   function configTiming(value: number){
     const tim = clamp(value, TIME_MINI, TIME_MAXI).toString();
     setTiming(tim);
-    AsyncStorage.setItem('notificationTiming', tim);
+    ParamStorage.setItem('notificationTiming', tim);
   }
 
   function increaseTiming(){
