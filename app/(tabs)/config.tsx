@@ -72,9 +72,8 @@ export default function Index() {
   return (
     <View style={styles.container}>
       <Text style={styles.titre}>Notification</Text>
-      <View style={{height: 60}}>
-        <View style={lstyle.inline}>
-          <Text style={{...styles.text, textAlign: 'left', paddingLeft: 20}}>Activer les notifications</Text>
+      <View style={lstyle.inline}>
+          <Text style={styles.text}>Activer les notifications</Text>
           <Switch
             trackColor={{false: '#fff', true: '#fff'}}
             thumbColor={enableNotif ? '#4891fa' : '#d0efff'}
@@ -82,14 +81,14 @@ export default function Index() {
             onValueChange={toggleEnableNotif}
             value={enableNotif}
           />
-        </View>
       </View>
       {enableNotif &&
         <View style={{height: 60}}>
           <View style={lstyle.inline}>
             <Text style={styles.text}>M'alerter</Text>
             <RoundedButton label="-" onPress={decreaseTiming}/>
-            <TextInput value={timing} onChangeText={changeTiming} keyboardType='numeric' style={styles.input}/>
+            <TextInput value={timing} onChangeText={changeTiming} keyboardType='numeric'
+                       style={[styles.input, {width: 40}]}/>
             <RoundedButton label="+" onPress={increaseTiming}/>
             <Text style={styles.text}>minutes avant</Text>
           </View>
@@ -101,9 +100,11 @@ export default function Index() {
 
 const lstyle = StyleSheet.create({
   inline: {
-    flex: 1,
+    width: '100%',
+    height: 60,
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     padding: 10,
-    height: 30,
   },
 });

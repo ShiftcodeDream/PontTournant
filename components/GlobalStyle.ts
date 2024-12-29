@@ -50,7 +50,6 @@ export default StyleSheet.create({
   text: {
     color: '#eeb',
     fontSize: 16,
-    textAlign: 'justify',
     padding: 10,
   },
   link: {
@@ -63,7 +62,6 @@ export default StyleSheet.create({
     color: '#000',
     fontSize: 16,
     fontWeight: 'bold',
-    minWidth: 40,
     borderWidth: 1,
     borderColor: '#eeb',
     margin: 6,
