@@ -1,10 +1,11 @@
+import React, {useEffect, useState} from "react";
 import {Text, TextInput, View, StyleSheet, Switch} from "react-native";
-import {useEffect, useState} from "react";
 
 import {clamp} from "@/components/Utils";
 import RoundedButton from "@/components/ui/RoundedButton";
 import styles, {theme} from "@/components/GlobalStyle";
 import { ParamStorage } from "@/components/ParamStorage";
+import TimeRange from "@/components/TimeRange";
 
 export default function Index() {
   const [timing, setTiming] = useState('10');
@@ -81,7 +82,7 @@ export default function Index() {
             value={enableNotif}
           />
       </View>
-      {enableNotif &&
+      {enableNotif && <>
         <View style={{height: 60}}>
           <View style={lstyle.inline}>
             <Text style={styles.text}>M'alerter</Text>
@@ -92,7 +93,8 @@ export default function Index() {
             <Text style={styles.text}>minutes avant</Text>
           </View>
         </View>
-      }
+        <TimeRange />
+      </>}
     </View>
   );
 }
