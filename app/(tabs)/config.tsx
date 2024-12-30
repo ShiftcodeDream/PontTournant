@@ -73,8 +73,8 @@ export default function Index() {
   return (
     <View style={styles.container}>
       <Text style={styles.titre}>Notification</Text>
-      <View style={lstyle.inline}>
-          <Text style={styles.text}>Activer les notifications</Text>
+      <View style={[lstyle.inline, lstyle.bordered]}>
+          <Text style={styles.text}>Me notifier avant que le pont tourne</Text>
           <Switch
             trackColor={{false: '#fff', true: '#fff'}}
             thumbColor={enableNotif ? theme.link : theme.sec}
@@ -85,12 +85,13 @@ export default function Index() {
       {enableNotif && <>
         <View style={{height: 60}}>
           <View style={lstyle.inline}>
-            <Text style={styles.text}>M'alerter</Text>
-            <RoundedButton label="-" onPress={decreaseTiming}/>
-            <TextInput value={timing} onChangeText={changeTiming} keyboardType='numeric'
-                       style={[styles.input, {width: 40}]}/>
-            <RoundedButton label="+" onPress={increaseTiming}/>
-            <Text style={styles.text}>minutes avant</Text>
+            <Text style={[styles.text, {flexGrow:2, flexWrap:'nowrap'}]}>Délai en minutes</Text>
+            <View style={[lstyle.inline, {flexShrink:5, justifyContent: 'flex-end'}]}>
+              <RoundedButton label="-" onPress={decreaseTiming}/>
+              <TextInput value={timing} onChangeText={changeTiming} keyboardType='numeric'
+                         style={[styles.input, {width: 40}]}/>
+              <RoundedButton label="+" onPress={increaseTiming}/>
+            </View>
           </View>
         </View>
         <TimeRange />
@@ -106,6 +107,13 @@ const lstyle = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
+  bordered: {
+    borderTopColor: theme.prim,
+    borderTopWidth: 2,
+    borderBottomColor: theme.prim,
+    borderBottomWidth: 2,
   },
 });

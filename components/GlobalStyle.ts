@@ -2,13 +2,14 @@ import {StyleSheet} from "react-native";
 
 const t = {
   bg      : '#0e2b51',
+  bgdark  : '#082345',
+  bglight : '#2a5998',
   fg      : '#d0efff',
   prim    : '#4891fa',
   sec     : '#eeb',
   danger  : '#dd46ad',
   success : '#2da823',
   link    : '#9a61bf',
-  bgdark  : '#082345',
 }
 export const theme = t;
 
@@ -20,7 +21,7 @@ export default StyleSheet.create({
   container: {
     backgroundColor: t.bg,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
   /* Barre d'onglets en bas de l'écran */
   tabBar: {
