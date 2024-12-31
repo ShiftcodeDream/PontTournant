@@ -4,7 +4,7 @@ import {Text, TextInput, View, StyleSheet, Switch} from "react-native";
 import {clamp} from "@/components/Utils";
 import RoundedButton from "@/components/ui/RoundedButton";
 import styles, {theme} from "@/components/GlobalStyle";
-import { ParamStorage } from "@/components/ParamStorage";
+import { ParamStorage } from "@/components/db/ParamStorage";
 import TimeRange from "@/components/TimeRange";
 
 export default function Index() {
