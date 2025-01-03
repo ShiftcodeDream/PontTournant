@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Text, TextInput, View, StyleSheet, Switch} from "react-native";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 import {clamp} from "@/components/Utils";
 import RoundedButton from "@/components/ui/RoundedButton";
@@ -8,6 +9,8 @@ import { ParamStorage } from "@/components/db/ParamStorage";
 import TimeRange from "@/components/TimeRange";
 import {TimeRangeDb, TimeRangeType} from "@/components/db/TimeRangeDb";
 import Toast, {BaseToast, ErrorToast} from "react-native-toast-message";
+import CustomButton from "@/components/ui/CustomButton";
+import dayjs from "dayjs";
 
 export default function Config() {
   const [timing, setTiming] = useState('10');
@@ -77,10 +80,25 @@ export default function Config() {
     }
   }
 
+  function onAdd(){
+    let debut = dayjs();
+    debut = debut.subtract(debut.minute() % INCREMENT, 'minute');
+    let fin = debut.add(15, 'minutes');
+    const day = new Array<boolean>(7).fill(false);
+    let dow = (debut.day() - 1 ) % 7;
+    day[dow] = true;
+
+    const tr = {
+      enabled: true, startTime:debut, endTime:fin, weekDays: day
+    }
+    timeRangeDb.add(tr as TimeRangeType).then(refresh);
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.titre}>Notification</Text>
-      <View style={[lstyle.inline, lstyle.bordered]}>
+      <View style={styles.withSeparator} />
+      <View style={[lstyle.inline, styles.withSeparator]}>
           <Text style={styles.text}>Me notifier avant que le pont tourne</Text>
           <Switch
             trackColor={{false: '#fff', true: '#fff'}}
@@ -90,7 +108,7 @@ export default function Config() {
           />
       </View>
       {enableNotif && <>
-        <View style={{height: 60}}>
+        <View style={[styles.withSeparator, {height: 60}]}>
           <View style={lstyle.inline}>
             <Text style={[styles.text, {flexGrow:2, flexWrap:'nowrap'}]}>Délai en minutes</Text>
             <View style={[lstyle.inline, {flexShrink:5, justifyContent: 'flex-end'}]}>
@@ -101,10 +119,22 @@ export default function Config() {
             </View>
           </View>
         </View>
+        <View style={{paddingTop: 5}}>
+            <CustomButton label="Ajouter" onPress={onAdd}
+                          icon={<MaterialIcons name="alarm-add" size={28} color={theme.fg}/>}/>
+        </View>
 
-        {ranges.map(range => (
-          <TimeRange range={range} onRefreshNeeded={refresh} key={range.id}/>
-        ))}
+        {ranges.length
+          &&
+          ranges.map(range => (
+            <TimeRange range={range} onRefreshNeeded={refresh} key={range.id}/>
+          ))
+          ||
+            <View style={[styles.roundedContainer, {height: 120, flexDirection:'row', justifyContent:'center', alignItems:'center'}]}>
+              <Text style={[styles.text, {fontWeight:'bold'}]}>Aucune notification définie pour le moment.
+                  Cliquez sur "Ajouter" pour en créer une.</Text>
+            </View>
+        }
       </>}
 
       <Toast config={toastConfig} />
@@ -121,12 +151,6 @@ const lstyle = StyleSheet.create({
     alignItems: 'center',
     paddingLeft: 10,
     paddingRight: 10,
-  },
-  bordered: {
-    borderTopColor: theme.prim,
-    borderTopWidth: 2,
-    borderBottomColor: theme.prim,
-    borderBottomWidth: 2,
   },
 });
 

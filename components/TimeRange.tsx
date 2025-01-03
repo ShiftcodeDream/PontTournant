@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {View, Text, Switch} from "react-native";
 import Toast from 'react-native-toast-message';
+import Ionicons from "@expo/vector-icons/Ionicons";
 import dayjs from "dayjs";
 
 import styles, {theme} from "@/components/GlobalStyle";
@@ -8,7 +9,6 @@ import CustomButton from "@/components/ui/CustomButton";
 import TimeSelector from "@/components/ui/TimeSelector";
 import DayOfWeekSelector from "@/components/DayOfWeekSelector";
 import {TimeRangeDb, TimeRangeType} from "@/components/db/TimeRangeDb";
-import Ionicons from "@expo/vector-icons/Ionicons";
 
 type Props = {
   range: TimeRangeType,
@@ -79,7 +79,7 @@ export default function TimeRange({range, onRefreshNeeded}: Props) {
     timeRangeDb.deleteById(id).then(onRefreshNeeded);
   }
   return (
-    <View style={{borderWidth:2, borderColor:theme.bglight, marginTop:4, borderRadius:10, marginLeft:20, marginRight:20}}>
+    <View style={styles.roundedContainer}>
       <View style={{display: 'flex', flexDirection:'row', justifyContent:'space-between', alignItems:'center', backgroundColor:theme.bglight}}>
         <View style={{display: 'flex', flexDirection:'row', justifyContent:'flex-start'}}>
           <Switch
@@ -89,7 +89,7 @@ export default function TimeRange({range, onRefreshNeeded}: Props) {
             value={enabled}
           />
           <Text style={[styles.text,{color:enabled ? theme.fg : theme.danger}]}>
-            {enabled ? 'Activé' : 'Désactivé'}
+            {enabled ? 'Notification activée' : 'Notification désactivée'}
           </Text>
         </View>
         <View>
@@ -99,7 +99,7 @@ export default function TimeRange({range, onRefreshNeeded}: Props) {
         </View>
       </View>
       <View style={{display: 'flex', flexDirection:'row', justifyContent:'flex-end'}}>
-        <Text style={styles.text}> Entre </Text>
+        <Text style={styles.text}>Entre </Text>
         <TimeSelector value={start} onChange={changeStartValue}/>
         <Text style={styles.text}> et </Text>
         <TimeSelector value={end} onChange={changeEndValue}/>

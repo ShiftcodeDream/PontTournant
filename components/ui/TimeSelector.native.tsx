@@ -21,7 +21,7 @@ export default function({value, onChange, minuteInterval=5}: Props){
     onChange(event, value);
   }
 
-  const styles = StyleSheet.create({
+  const lstyle = StyleSheet.create({
     container: {
       display: "flex",
       flexDirection: "column",
@@ -41,13 +41,13 @@ export default function({value, onChange, minuteInterval=5}: Props){
   });
 
   return (
-    <View style={styles.container}>
+    <View style={lstyle.container}>
       {/* Display the selected date */}
       <Pressable
         onPress={()=>setShow(d=>!d)}
-        style={styles.pickedDateContainer}
+        style={lstyle.pickedDateContainer}
       >
-        <Text style={styles.pickedDate}>
+        <Text style={lstyle.pickedDate}>
           {dayjs(value).format('H:mm')}
         </Text>
       </Pressable>

@@ -76,6 +76,7 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     borderWidth: 1,
     borderColor: t.sec,
+    borderRadius: 5,
     margin: 6,
     textAlign: 'center',
   },
@@ -85,7 +86,7 @@ export default StyleSheet.create({
   },
   buttonText: {
     textAlign: 'center',
-    color: t.sec,
+    color: t.fg,
     fontSize: 16,
     padding: 5,
   },
@@ -103,4 +104,17 @@ export default StyleSheet.create({
     color: t.fg,
     textAlign: 'center',
   },
+  roundedContainer: {
+    borderWidth:2,
+    borderColor:t.bglight,
+    marginTop:4,
+    borderRadius:10,
+    marginLeft:20,
+    marginRight:20,
+  },
+  withSeparator: {
+    width: '100%',
+    borderBottomColor: t.prim,
+    borderBottomWidth: 2,
+  }
 });

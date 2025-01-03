@@ -18,11 +18,11 @@ export default function CustomButton({ label= '', type='primary', style={}, icon
     default: bg = theme.prim; break;
   }
   return (
-    <View style={[styles.button, style]}>
-      <Pressable style={[styles.button, {backgroundColor: bg, display:'flex', flexDirection:'row', justifyContent:'flex-start'}]} onPress={onPress}>
-        {icon}
-        {label && <Text style={styles.buttonText}>{label}</Text>}
-      </Pressable>
+    <View style={[styles.button, {backgroundColor: bg, padding:5}, style]}>
+        <Pressable style={[styles.button, {backgroundColor: bg, display:'flex', flexDirection:'row', justifyContent:'flex-start'}]} onPress={onPress}>
+          {icon}
+          {label && <Text style={styles.buttonText}>{label}</Text>}
+        </Pressable>
     </View>
   );
 }
