@@ -5,10 +5,11 @@ type Props = {
   label?: string,
   type?: string,
   style?: any,
+  icon?: any,
   onPress: ()=>void
 };
 
-export default function CustomButton({ label= '', type='primary', style={}, onPress }: Props): JSX.Element {
+export default function CustomButton({ label= '', type='primary', style={}, icon, onPress }: Props): JSX.Element {
   let bg;
   switch(type){
     case 'danger': bg = theme.danger; break;
@@ -18,8 +19,9 @@ export default function CustomButton({ label= '', type='primary', style={}, onPr
   }
   return (
     <View style={[styles.button, style]}>
-      <Pressable style={[styles.button, {backgroundColor: bg}]} onPress={onPress}>
-        <Text style={styles.buttonText}>{label}</Text>
+      <Pressable style={[styles.button, {backgroundColor: bg, display:'flex', flexDirection:'row', justifyContent:'flex-start'}]} onPress={onPress}>
+        {icon}
+        {label && <Text style={styles.buttonText}>{label}</Text>}
       </Pressable>
     </View>
   );

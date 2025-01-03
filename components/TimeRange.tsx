@@ -7,6 +7,7 @@ import CustomButton from "@/components/ui/CustomButton";
 import TimeSelector from "@/components/ui/TimeSelector";
 import DayOfWeekSelector from "@/components/DayOfWeekSelector";
 import {TimeRangeDb, TimeRangeType} from "@/components/db/TimeRangeDb";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 type Props = {
   range: TimeRangeType,
@@ -75,7 +76,9 @@ export default function TimeRange({range, onRefreshNeeded}: Props) {
           </Text>
         </View>
         <View>
-          <CustomButton label="Supprimer" type="danger" onPress={()=>onDelete(range.id)}/>
+          <CustomButton type="danger" onPress={()=>onDelete(range.id)}
+                        icon={<Ionicons name="trash-outline" size={28} color={theme.fg}/>}
+          />
         </View>
       </View>
       <View style={{display: 'flex', flexDirection:'row', justifyContent:'flex-end'}}>
