@@ -1,16 +1,17 @@
 import React, {useEffect, useState} from "react";
-import {Text, TextInput, View, StyleSheet, Switch} from "react-native";
+import {Text, TextInput, View, StyleSheet, Switch, SafeAreaView, ScrollView} from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import Toast, {BaseToast, ErrorToast} from "react-native-toast-message";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import dayjs from "dayjs";
 
 import {clamp} from "@/components/Utils";
-import RoundedButton from "@/components/ui/RoundedButton";
-import styles, {theme} from "@/components/GlobalStyle";
 import { ParamStorage } from "@/components/db/ParamStorage";
-import TimeRange from "@/components/TimeRange";
 import {TimeRangeDb, TimeRangeType} from "@/components/db/TimeRangeDb";
-import Toast, {BaseToast, ErrorToast} from "react-native-toast-message";
+import styles, {theme} from "@/components/GlobalStyle";
+import RoundedButton from "@/components/ui/RoundedButton";
+import TimeRange from "@/components/TimeRange";
 import CustomButton from "@/components/ui/CustomButton";
-import dayjs from "dayjs";
 
 export default function Config() {
   const [timing, setTiming] = useState('10');
@@ -95,50 +96,54 @@ export default function Config() {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.titre}>Notification</Text>
-      <View style={styles.withSeparator} />
-      <View style={[lstyle.inline, styles.withSeparator]}>
-          <Text style={styles.text}>Me notifier avant que le pont tourne</Text>
-          <Switch
-            trackColor={{false: '#fff', true: '#fff'}}
-            thumbColor={enableNotif ? theme.link : theme.sec}
-            onValueChange={toggleEnableNotif}
-            value={enableNotif}
-          />
-      </View>
-      {enableNotif && <>
-        <View style={[styles.withSeparator, {height: 60}]}>
-          <View style={lstyle.inline}>
-            <Text style={[styles.text, {flexGrow:2, flexWrap:'nowrap'}]}>Délai en minutes</Text>
-            <View style={[lstyle.inline, {flexShrink:5, justifyContent: 'flex-end'}]}>
-              <RoundedButton label="-" onPress={decreaseTiming}/>
-              <TextInput value={timing} onChangeText={changeTiming} keyboardType='numeric'
-                         style={[styles.input, {width: 40}]}/>
-              <RoundedButton label="+" onPress={increaseTiming}/>
-            </View>
+    <SafeAreaProvider>
+      <SafeAreaView>
+        <ScrollView contentContainerStyle={styles.container}>
+          <Text style={styles.titre}>Notification</Text>
+          <View style={styles.withSeparator} />
+          <View style={[lstyle.inline, styles.withSeparator]}>
+              <Text style={styles.text}>Me notifier avant que le pont tourne</Text>
+              <Switch
+                trackColor={{false: '#fff', true: '#fff'}}
+                thumbColor={enableNotif ? theme.link : theme.sec}
+                onValueChange={toggleEnableNotif}
+                value={enableNotif}
+              />
           </View>
-        </View>
-        <View style={{paddingTop: 5}}>
-            <CustomButton label="Ajouter" onPress={onAdd}
-                          icon={<MaterialIcons name="alarm-add" size={28} color={theme.fg}/>}/>
-        </View>
-
-        {ranges.length
-          &&
-          ranges.map(range => (
-            <TimeRange range={range} onRefreshNeeded={refresh} key={range.id}/>
-          ))
-          ||
-            <View style={[styles.roundedContainer, {height: 120, flexDirection:'row', justifyContent:'center', alignItems:'center'}]}>
-              <Text style={[styles.text, {fontWeight:'bold'}]}>Aucune notification définie pour le moment.
-                  Cliquez sur "Ajouter" pour en créer une.</Text>
+          {enableNotif && <>
+            <View style={[styles.withSeparator, {height: 60}]}>
+              <View style={lstyle.inline}>
+                <Text style={[styles.text, {flexGrow:2, flexWrap:'nowrap'}]}>Délai en minutes</Text>
+                <View style={[lstyle.inline, {flexShrink:5, justifyContent: 'flex-end'}]}>
+                  <RoundedButton label="-" onPress={decreaseTiming}/>
+                  <TextInput value={timing} onChangeText={changeTiming} keyboardType='numeric'
+                             style={[styles.input, {width: 40}]}/>
+                  <RoundedButton label="+" onPress={increaseTiming}/>
+                </View>
+              </View>
             </View>
-        }
-      </>}
+            <View style={{paddingTop: 5}}>
+                <CustomButton label="Ajouter" onPress={onAdd}
+                              icon={<MaterialIcons name="alarm-add" size={28} color={theme.fg}/>}/>
+            </View>
 
-      <Toast config={toastConfig} />
-    </View>
+            {ranges.length
+              &&
+              ranges.map(range => (
+                <TimeRange range={range} onRefreshNeeded={refresh} key={range.id}/>
+              ))
+              ||
+                <View style={[styles.roundedContainer, {height: 120, flexDirection:'row', justifyContent:'center', alignItems:'center'}]}>
+                  <Text style={[styles.text, {fontWeight:'bold'}]}>Aucune notification définie pour le moment.
+                      Cliquez sur "Ajouter" pour en créer une.</Text>
+                </View>
+            }
+          </>}
+
+          <Toast config={toastConfig} />
+        </ScrollView>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 
