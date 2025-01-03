@@ -1,12 +1,28 @@
 import {AppDatabase} from "@/components/db/AppDatabase";
+import dayjs, {Dayjs} from "dayjs";
 
+/**
+ * Object type
+ */
 export type TimeRangeType = {
+  id: number,
+  startTime: Dayjs,
+  endTime: Dayjs,
+  weekDays: boolean[],
+  enabled: boolean
+}
+/**
+ * Object internal storage into Sqlite database
+ */
+type sqlTimeRangeType = {
   id: number,
   start_time: number,
   end_time: number,
-  enabled: boolean
+  week_days: string,
+  enabled: number
 }
 
+const AllWeekDays = "lun,mar,mer,jeu,ven,sam,dim".split(',');
 /**
  * SQLite database access to time_range table
  */
@@ -17,10 +33,11 @@ export class TimeRangeDb extends AppDatabase {
    */
   async add(value: TimeRangeType): Promise<number> {
     const db = this.getDbSync();
+    const data = TimeRangeDb.toSqlDataType(value);
 
     return db.runAsync(
-      "INSERT INTO time_range (start_time, end_time, enabled) VALUES(?,?,?)",
-      value.start_time, value.end_time, value.enabled? 1 : 0
+      "INSERT INTO time_range (start_time, end_time, enabled, week_days) VALUES(?,?,?,?)",
+      data.start_time, data.end_time, data.enabled, data.week_days
     )
       .then(result => result.lastInsertRowId)
   }
@@ -30,9 +47,9 @@ export class TimeRangeDb extends AppDatabase {
    */
   async getAll(): Promise<TimeRangeType[]>{
     const db = this.getDbSync();
-    return db.getAllAsync<any>(
+    return db.getAllAsync(
       "SELECT * FROM time_range"
-    ).then(rep => rep.map(r => (r as TimeRangeType)));
+    ).then(rep => rep.map(TimeRangeDb.toTimeRangeDataType));
   }
 
   /**
@@ -42,7 +59,7 @@ export class TimeRangeDb extends AppDatabase {
     const db = this.getDbSync();
     return db.getAllAsync(
       "SELECT * FROM time_range WHERE enabled=1"
-    ).then(rep => rep.map(r => (r as TimeRangeType)));
+    ).then(rep => rep.map(TimeRangeDb.toTimeRangeDataType));
   }
 
   /**
@@ -54,7 +71,7 @@ export class TimeRangeDb extends AppDatabase {
     return db.getFirstAsync(
       "SELECT * FROM time_range WHERE id=?",
       id
-    ).then(r => (r as TimeRangeType));
+    ).then(TimeRangeDb.toTimeRangeDataType);
   }
 
   /**
@@ -64,9 +81,10 @@ export class TimeRangeDb extends AppDatabase {
    */
   async updateById(id: number, value: TimeRangeType): Promise<void>{
     const db = this.getDbSync();
+    const data = TimeRangeDb.toSqlDataType(value);
     db.runAsync(
-      "UPDATE time_range SET start_time=?, end_time=?, enabled=? WHERE id=?",
-      value.start_time, value.end_time, value.enabled?1:0,
+      "UPDATE time_range SET start_time=?, end_time=?, enabled=?, week_days=? WHERE id=?",
+      data.start_time, data.end_time, data.enabled, data.week_days,
       id
     );
   }
@@ -101,5 +119,35 @@ export class TimeRangeDb extends AppDatabase {
     await db.runAsync(
       "DELETE FROM time_range WHERE true"
     );
+  }
+
+  /**
+   * Converts data structure to be stored into Sqlite database
+   * @param v
+   */
+  static toSqlDataType(v: TimeRangeType){
+    let result: unknown = {
+      id: v.id,
+      start_time: v.startTime.get('hour')*100 + v.startTime.get('minute'),
+      end_time: v.endTime.get('hour')*100 + v.endTime.get('minute'),
+      week_days: AllWeekDays.filter((d,i) => v.weekDays[i]).join(','),
+      enabled: v.enabled ? 1 : 0
+    }
+    return (result as sqlTimeRangeType);
+  }
+
+  /**
+   * Creates an object instance from data retrieved from Sqlite database
+   * @param v
+   */
+  static toTimeRangeDataType(v: unknown): TimeRangeType {
+    let result: unknown = {
+      id: v.id,
+      startTime: dayjs().hour(Math.floor(v.start_time/100)).minute(v.start_time % 60),
+      endTime: dayjs().hour(Math.floor(v.end_time/100)).minute(v.end_time % 60),
+      weekDays: AllWeekDays.map(d=>v.week_days.includes(d)),
+      enabled: v.enabled === 1
+    }
+    return (result as TimeRangeType);
   }
 }

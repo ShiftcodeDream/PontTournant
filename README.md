@@ -20,3 +20,10 @@ Un mécanisme est mis en place pour permettre la mise à jour de la base de donn
 - /components/db : les classes d'accès à la base de données
 - /components/ui : les composants d'interface de bas niveau pouvant être repris dans d'autres applications
 - /app : l'application et ses onglets
+
+## Lancement de l'environnement de développement
+```npx expo run:android```
+Le composant Sqlite n'existant pas sous web, le projet web ne sera pas suivi.
+
+## Support ios
+Aucun support. Un fork de ce projet est nécessaire pour qui souhaiterait générer une version Apple.

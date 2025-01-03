@@ -6,15 +6,21 @@ import RoundedButton from "@/components/ui/RoundedButton";
 import styles, {theme} from "@/components/GlobalStyle";
 import { ParamStorage } from "@/components/db/ParamStorage";
 import TimeRange from "@/components/TimeRange";
+import {TimeRangeDb, TimeRangeType} from "@/components/db/TimeRangeDb";
 
-export default function Index() {
+export default function Config() {
   const [timing, setTiming] = useState('10');
   const [enableNotif, setEnableNotif] = useState(true);
+  const [ranges, setRanges] = useState(new Array<TimeRangeType>());
   const TIME_MINI = 0;
   const TIME_MAXI = 120;
   const INCREMENT = 5;
 
-  useEffect(()=>{
+  const timeRangeDb = new TimeRangeDb();
+
+  useEffect(refresh, []);
+
+  function refresh(){
     ParamStorage.getItem('notificationEnabled').then(r => {
       setEnableNotif(r === 'true');
     });
@@ -25,8 +31,8 @@ export default function Index() {
       }
       setTiming(r);
     });
-  }, []);
-
+    timeRangeDb.getAll().then(setRanges);
+  }
   function toggleEnableNotif(){
     setEnableNotif(v => {
       ParamStorage.setItem('notificationEnabled', !v ? 'true' : 'false');
@@ -94,7 +100,10 @@ export default function Index() {
             </View>
           </View>
         </View>
-        <TimeRange />
+
+        {ranges.map(range => (
+          <TimeRange range={range} onRefreshNeeded={refresh} key={range.id}/>
+        ))}
       </>}
     </View>
   );

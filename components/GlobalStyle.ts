@@ -78,16 +78,15 @@ export default StyleSheet.create({
     margin: 6,
     textAlign: 'center',
   },
-  wideButton: {
-    width: '100%',
+  button: {
     backgroundColor: t.prim,
-    borderColor: t.fg,
-    borderWidth: 2,
+    borderRadius: 5,
   },
   buttonText: {
     textAlign: 'center',
     color: t.sec,
-    fontSize: 24,
+    fontSize: 16,
+    padding: 5,
   },
   roundedButtonContainer: {
     width: 30,

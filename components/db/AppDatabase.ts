@@ -8,6 +8,7 @@ const MIGRATION_STATEMENT_TO_V1 : string[] = [
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     start_time NUMERIC,
     end_time NUMERIC,
+    week_days TEXT DEFAULT '',
     enabled NUMERIC
    )`
 ];
@@ -26,6 +27,12 @@ export class AppDatabase {
   }
   private maybeMigrateDbSync(db: SQLiteDatabase) {
     db.withTransactionSync(() => {
+      // TODO : clean
+      // db.runSync("ALTER TABLE time_range DROP COLUMN week_days");
+      // db.runSync("ALTER TABLE time_range ADD COLUMN week_days TEXT DEFAULT ''");
+      // console.log(db.getAllSync("PRAGMA table_info(time_range)"));
+      // console.log(db.getAllSync("SELECT * FROM time_range"));
+
       const result = db.getFirstSync<{ user_version: number }>('PRAGMA user_version');
       let currentDbVersion = result?.user_version ?? 0;
       if (currentDbVersion >= DATABASE_VERSION) {
