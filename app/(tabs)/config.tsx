@@ -7,7 +7,7 @@ import styles, {theme} from "@/components/GlobalStyle";
 import { ParamStorage } from "@/components/db/ParamStorage";
 import TimeRange from "@/components/TimeRange";
 import {TimeRangeDb, TimeRangeType} from "@/components/db/TimeRangeDb";
-import Toast from "react-native-toast-message";
+import Toast, {BaseToast, ErrorToast} from "react-native-toast-message";
 
 export default function Config() {
   const [timing, setTiming] = useState('10');
@@ -106,7 +106,8 @@ export default function Config() {
           <TimeRange range={range} onRefreshNeeded={refresh} key={range.id}/>
         ))}
       </>}
-      <Toast />
+
+      <Toast config={toastConfig} />
     </View>
   );
 }
@@ -128,3 +129,48 @@ const lstyle = StyleSheet.create({
     borderBottomWidth: 2,
   },
 });
+
+const toastConfig = {
+  /*
+    Overwrite 'success' type,
+    by modifying the existing `BaseToast` component
+  */
+  success: (props) => (
+    <BaseToast
+      {...props}
+      style={{
+        borderLeftColor: theme.success,
+        backgroundColor: theme.sec
+      }}
+      text1Style={{
+        fontSize: 18,
+        color: theme.bg,
+      }}
+      text2Style={{
+        fontSize: 16,
+        color: theme.bg,
+      }}
+    />
+  ),
+  /*
+    Overwrite 'error' type,
+    by modifying the existing `ErrorToast` component
+  */
+  error: (props) => (
+    <ErrorToast
+      {...props}
+      style={{
+        borderLeftColor: theme.danger,
+        backgroundColor: theme.sec
+      }}
+      text1Style={{
+        fontSize: 18,
+        color: theme.bg,
+      }}
+      text2Style={{
+        fontSize: 16,
+        color: theme.bg,
+      }}
+    />
+  ),
+};

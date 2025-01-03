@@ -42,12 +42,13 @@ export default function TimeRange({range, onRefreshNeeded}: Props) {
   function chekcTimeCoherence(debut: Date, fin: Date): boolean{
     const d = debut.getHours()*100 + debut.getMinutes();
     const f = fin.getHours()*100 + fin.getMinutes();
-    if(debut < fin)
+    if(d < f) {
       return true;
-    else {
+    } else {
       Toast.show({
         type: "error",
         text1: "Plage horaire incorrecte",
+        text2: "L'heure de fin est avant l'heure de début",
       });
       return false;
     }

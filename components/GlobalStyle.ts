@@ -7,6 +7,7 @@ const t = {
   fg      : '#d0efff',
   prim    : '#4891fa',
   sec     : '#eeb',
+  warning : '#e39e3f',
   danger  : '#dd46ad',
   success : '#2da823',
   link    : '#9a61bf',
