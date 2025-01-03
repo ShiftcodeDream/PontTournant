@@ -7,6 +7,7 @@ import styles, {theme} from "@/components/GlobalStyle";
 import { ParamStorage } from "@/components/db/ParamStorage";
 import TimeRange from "@/components/TimeRange";
 import {TimeRangeDb, TimeRangeType} from "@/components/db/TimeRangeDb";
+import Toast from "react-native-toast-message";
 
 export default function Config() {
   const [timing, setTiming] = useState('10');
@@ -105,6 +106,7 @@ export default function Config() {
           <TimeRange range={range} onRefreshNeeded={refresh} key={range.id}/>
         ))}
       </>}
+      <Toast />
     </View>
   );
 }

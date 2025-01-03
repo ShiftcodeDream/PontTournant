@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {View, Text, Switch} from "react-native";
+import Toast from 'react-native-toast-message';
 import dayjs from "dayjs";
 
 import styles, {theme} from "@/components/GlobalStyle";
@@ -38,11 +39,26 @@ export default function TimeRange({range, onRefreshNeeded}: Props) {
     timeRangeDb.updateById(range.id, (data as TimeRangeType));
   },[start, end, enabled, days]);
 
+  function chekcTimeCoherence(debut: Date, fin: Date): boolean{
+    const d = debut.getHours()*100 + debut.getMinutes();
+    const f = fin.getHours()*100 + fin.getMinutes();
+    if(debut < fin)
+      return true;
+    else {
+      Toast.show({
+        type: "error",
+        text1: "Plage horaire incorrecte",
+      });
+      return false;
+    }
+  }
   function changeStartValue(event: Event, date: Date){
-    setStart(date);
+    if(chekcTimeCoherence(date, end))
+      setStart(date);
   }
   function changeEndValue(event: Event, date: Date){
-    setEnd(date);
+    if(chekcTimeCoherence(start, date))
+      setEnd(date);
   }
   function toggleEnabled(){
     setEnabled(v=>!v);
