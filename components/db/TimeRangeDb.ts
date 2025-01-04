@@ -26,13 +26,13 @@ const AllWeekDays = "lun,mar,mer,jeu,ven,sam,dim".split(',');
 /**
  * SQLite database access to time_range table
  */
-export class TimeRangeDb extends AppDatabase {
+export class TimeRangeDb {
   /**
    * Create a new TimeRange in the db
    * @param value Timerange to create
    */
   async add(value: TimeRangeType): Promise<number> {
-    const db = this.getDbSync();
+    const db = AppDatabase.getInstance();
     const data = TimeRangeDb.toSqlDataType(value);
 
     return db.runAsync(
@@ -46,7 +46,7 @@ export class TimeRangeDb extends AppDatabase {
    * Get all TimeRanges
    */
   async getAll(): Promise<TimeRangeType[]>{
-    const db = this.getDbSync();
+    const db = AppDatabase.getInstance();
     return db.getAllAsync(
       "SELECT * FROM time_range ORDER BY id DESC"
     ).then(rep => {
@@ -60,7 +60,7 @@ export class TimeRangeDb extends AppDatabase {
    * Get all TimeRange currently enabled
    */
   async getAllActive(): Promise<TimeRangeType[]>{
-    const db = this.getDbSync();
+    const db = AppDatabase.getInstance();
     return db.getAllAsync(
       "SELECT * FROM time_range WHERE enabled=1"
     ).then(rep => rep.map(TimeRangeDb.toTimeRangeDataType));
@@ -71,7 +71,7 @@ export class TimeRangeDb extends AppDatabase {
    * @param id
    */
   async getById(id: number): Promise<TimeRangeType>{
-    const db = this.getDbSync();
+    const db = AppDatabase.getInstance();
     return db.getFirstAsync(
       "SELECT * FROM time_range WHERE id=?",
       id
@@ -84,7 +84,7 @@ export class TimeRangeDb extends AppDatabase {
    * @param value
    */
   async updateById(id: number, value: TimeRangeType): Promise<void>{
-    const db = this.getDbSync();
+    const db = AppDatabase.getInstance();
     const data = TimeRangeDb.toSqlDataType(value);
     db.runAsync(
       "UPDATE time_range SET start_time=?, end_time=?, enabled=?, week_days=? WHERE id=?",
@@ -98,7 +98,7 @@ export class TimeRangeDb extends AppDatabase {
    * @param id
    */
   async deleteById(id: number): Promise<void>{
-    const db = this.getDbSync();
+    const db = AppDatabase.getInstance();
     await db.runAsync(
       "DELETE FROM time_range WHERE id=?",
       id
@@ -109,7 +109,7 @@ export class TimeRangeDb extends AppDatabase {
    * Deletes from the db all inactive TimeRanges
    */
   async deleteAllInactive(): Promise<void>{
-    const db = this.getDbSync();
+    const db = AppDatabase.getInstance();
     await db.runAsync(
       "DELETE FROM time_range WHERE enabled=0"
     );
@@ -119,7 +119,7 @@ export class TimeRangeDb extends AppDatabase {
    * Deletes all TimeRanges
    */
   async deleteAll(): Promise<void>{
-    const db = this.getDbSync();
+    const db = AppDatabase.getInstance();
     await db.runAsync(
       "DELETE FROM time_range WHERE true"
     );

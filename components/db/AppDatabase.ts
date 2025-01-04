@@ -1,5 +1,6 @@
 import {openDatabaseSync, SQLiteDatabase} from "expo-sqlite";
 
+const DATABASE_NAME='ExpoSQLiteStorage';
 const DATABASE_VERSION = 1;
 // Times in hour + minutes are stocked with the following formula :
 // hours*100 + minutes (hours from 0 to 23, minutes from 0 to 59)
@@ -10,27 +11,35 @@ const MIGRATION_STATEMENT_TO_V1 : string[] = [
     end_time NUMERIC,
     week_days TEXT DEFAULT '',
     enabled NUMERIC
-   )`
+   )`,
+  `CREATE TABLE IF NOT EXISTS tide (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    tide_timestamp TEXT UNIQUE,
+    last_notification TEXT DEFAULT NULL
+    )`
 ];
-
+// Singleton for SQLite database access
 export class AppDatabase {
-  protected db:SQLiteDatabase | null = null;
+  private static db:SQLiteDatabase | null = null;
 
-  constructor(private readonly databaseName: string = 'ExpoSQLiteStorage'){ }
+  private constructor(){ }
 
-  protected getDbSync(): SQLiteDatabase {
-    if (!this.db) {
-      this.db = openDatabaseSync(this.databaseName);
-      this.maybeMigrateDbSync(this.db);
+  public static getInstance(): SQLiteDatabase {
+    if (!AppDatabase.db) {
+      AppDatabase.db = openDatabaseSync(DATABASE_NAME);
+      AppDatabase.maybeMigrateDbSync(AppDatabase.db);
     }
-    return this.db;
+    return AppDatabase.db;
   }
-  private maybeMigrateDbSync(db: SQLiteDatabase) {
+  private static maybeMigrateDbSync(db: SQLiteDatabase) {
     db.withTransactionSync(() => {
       // TODO : clean
-      // db.runSync("ALTER TABLE time_range DROP COLUMN week_days");
-      // db.runSync("ALTER TABLE time_range ADD COLUMN week_days TEXT DEFAULT ''");
-      // console.log(db.getAllSync("PRAGMA table_info(time_range)"));
+      // db.runSync(`DROP TABLE tide`);
+      // db.runSync(`CREATE TABLE IF NOT EXISTS tide (
+      //   id INTEGER PRIMARY KEY AUTOINCREMENT,
+      //   tide_timestamp TEXT UNIQUE,
+      //   last_notification TEXT DEFAULT NULL)`);
+      console.log(db.getAllSync("PRAGMA table_info(tide)"));
       // console.log(db.getAllSync("SELECT * FROM time_range"));
 
       const result = db.getFirstSync<{ user_version: number }>('PRAGMA user_version');
@@ -51,7 +60,6 @@ export class AppDatabase {
    * Closes the database connection asynchronously.
    */
   async close(): Promise<void> {
-    console.log("CLOSE");
     if (this.db) {
       await this.db.closeAsync();
       this.db = null;
