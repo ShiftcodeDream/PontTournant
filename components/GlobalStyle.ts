@@ -1,11 +1,15 @@
 import {StyleSheet} from "react-native";
 
 const t = {
+  bgfrom  : '#000428',
+  bgmid   : '#00295d',
+  bgto    : '#004e92',
   bg      : '#0e2b51',
-  bgdark  : '#082345',
   bglight : '#2a5998',
+  inactif : '#5d7685',
+  prim   : '#004e92',
   fg      : '#d0efff',
-  prim    : '#4891fa',
+  titre   : '#4891fa',
   sec     : '#eeb',
   warning : '#e39e3f',
   danger  : '#dd46ad',
@@ -17,17 +21,15 @@ export const theme = t;
 export default StyleSheet.create({
   /* Entete en haut de l'écran */
   titleBar: {
-    backgroundColor: t.bgdark,
+    backgroundColor: t.bgfrom,
   },
   container: {
-    backgroundColor: t.bg,
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
-  /* Barre d'onglets en bas de l'écran */
+  /* Barre d'onglets en haut de l'écran */
   tabBar: {
-    backgroundColor: t.bg,
-    color: t.prim,
+    backgroundColor: t.bgmid,
   },
   /* Affichage du jour */
   day: {
@@ -55,7 +57,7 @@ export default StyleSheet.create({
   },
   // Ecran infos
   titre: {
-    color: t.prim,
+    color: t.titre,
     fontSize: 24,
     fontWeight: 'bold',
   },
@@ -81,7 +83,6 @@ export default StyleSheet.create({
     textAlign: 'center',
   },
   button: {
-    backgroundColor: t.prim,
     borderRadius: 5,
   },
   buttonText: {
@@ -93,7 +94,6 @@ export default StyleSheet.create({
   roundedButtonContainer: {
     width: 30,
     height: 30,
-    backgroundColor: t.bg,
   },
   roundedButton: {
     borderWidth: 0,
@@ -107,6 +107,7 @@ export default StyleSheet.create({
   roundedContainer: {
     borderWidth:2,
     borderColor:t.bglight,
+    backgroundColor: t.bg,
     marginTop:4,
     borderRadius:10,
     marginLeft:20,
@@ -114,7 +115,7 @@ export default StyleSheet.create({
   },
   withSeparator: {
     width: '100%',
-    borderBottomColor: t.prim,
+    borderBottomColor: t.bg,
     borderBottomWidth: 2,
   }
 });

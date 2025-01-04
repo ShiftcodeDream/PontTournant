@@ -6,11 +6,13 @@ import styles, { theme } from "@/components/GlobalStyle";
 export default function RootLayout() {
   return (
     <Tabs screenOptions={{
-        tabBarActiveTintColor: theme.prim,
+        tabBarInactiveTintColor: theme.inactif,
+        tabBarActiveTintColor: theme.titre,
         headerStyle: styles.titleBar,
         headerShadowVisible: true,
         headerTintColor: theme.fg,
         tabBarStyle: styles.tabBar,
+        tabBarPosition: 'top',
       }}
     >
       <Tabs.Screen name="index" options={{
@@ -26,7 +28,7 @@ export default function RootLayout() {
           <Ionicons name={focused ? 'information-circle' : 'information-circle-outline'} color={color} size={24}/>
         ), }}/>
       <Tabs.Screen name="config" options={{
-        title:'Paramètres',
+        title:'Paramètres de notification',
         tabBarIcon: ({color}) => (
           <AntDesign name='setting' color={color} size={24}/>
         ) }}/>

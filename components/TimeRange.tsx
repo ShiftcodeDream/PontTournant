@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {View, Text, Switch} from "react-native";
 import Toast from 'react-native-toast-message';
 import Ionicons from "@expo/vector-icons/Ionicons";
+import {LinearGradient} from "expo-linear-gradient";
 import dayjs from "dayjs";
 
 import styles, {theme} from "@/components/GlobalStyle";
@@ -80,24 +81,26 @@ export default function TimeRange({range, onRefreshNeeded}: Props) {
   }
   return (
     <View style={styles.roundedContainer}>
-      <View style={{display: 'flex', flexDirection:'row', justifyContent:'space-between', alignItems:'center', backgroundColor:theme.bglight}}>
-        <View style={{display: 'flex', flexDirection:'row', justifyContent:'flex-start'}}>
-          <Switch
-            trackColor={{false: '#fff', true: '#fff'}}
-            thumbColor={enabled ? theme.success : theme.sec}
-            onValueChange={toggleEnabled}
-            value={enabled}
-          />
-          <Text style={[styles.text,{color:enabled ? theme.fg : theme.danger}]}>
-            {enabled ? 'Notification activée' : 'Notification désactivée'}
-          </Text>
+      <LinearGradient colors={[theme.bgmid, theme.bgto]}>
+        <View style={{display: 'flex', flexDirection:'row', justifyContent:'space-between', alignItems:'center', borderRadius:10}}>
+          <View style={{display: 'flex', flexDirection:'row', justifyContent:'flex-start'}}>
+            <Switch
+              trackColor={{false: '#fff', true: '#fff'}}
+              thumbColor={enabled ? theme.titre : theme.sec}
+              onValueChange={toggleEnabled}
+              value={enabled}
+            />
+            <Text style={[styles.text,{color:enabled ? theme.fg : theme.danger}]}>
+              {enabled ? 'Notification activée' : 'Notification désactivée'}
+            </Text>
+          </View>
+          <View>
+            <CustomButton type="transparent" onPress={()=>onDelete(range.id)}
+                          icon={<Ionicons name="trash-outline" size={28} color={theme.fg}/>}
+            />
+          </View>
         </View>
-        <View>
-          <CustomButton type="danger" onPress={()=>onDelete(range.id)}
-                        icon={<Ionicons name="trash-outline" size={28} color={theme.fg}/>}
-          />
-        </View>
-      </View>
+      </LinearGradient>
       <View style={{display: 'flex', flexDirection:'row', justifyContent:'flex-end'}}>
         <Text style={styles.text}>Entre </Text>
         <TimeSelector value={start} onChange={changeStartValue}/>

@@ -1,10 +1,11 @@
 import {JSX, useEffect, useState} from "react";
 import {Animated, SafeAreaView, RefreshControl} from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { LinearGradient } from 'expo-linear-gradient';
 import ScrollView = Animated.ScrollView;
 import dayjs, {Dayjs} from "dayjs";
 
-import styles from "@/components/GlobalStyle";
+import styles, {theme} from "@/components/GlobalStyle";
 import getMareeData from "@/components/MareeApi";
 import DayTitle from '@/components/DayTitle';
 import DisplayHour from "@/components/DisplayHour";
@@ -52,11 +53,13 @@ export default function Index() {
   return (
     <SafeAreaProvider>
       <SafeAreaView>
-        <ScrollView contentContainerStyle={styles.container}
-        refreshControl={<RefreshControl refreshing={loading} onRefresh={refresh} />}
-        >
-          {makeList(horaires)}
-        </ScrollView>
+        <LinearGradient colors={[theme.bgfrom, theme.bgto]}>
+          <ScrollView contentContainerStyle={styles.container}
+          refreshControl={<RefreshControl refreshing={loading} onRefresh={refresh} />}
+          >
+            {makeList(horaires)}
+          </ScrollView>
+        </LinearGradient>
       </SafeAreaView>
     </SafeAreaProvider>
   );

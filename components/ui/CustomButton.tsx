@@ -12,10 +12,11 @@ type Props = {
 export default function CustomButton({ label= '', type='primary', style={}, icon, onPress }: Props): JSX.Element {
   let bg;
   switch(type){
+    case 'primary': bg = theme.prim; break;
     case 'danger': bg = theme.danger; break;
     case 'success': bg = theme.success; break;
     case 'secondary': bg = theme.sec; break;
-    default: bg = theme.prim; break;
+    default: bg = 'transparent'; break;
   }
   return (
     <View style={[styles.button, {backgroundColor: bg, padding:5}, style]}>

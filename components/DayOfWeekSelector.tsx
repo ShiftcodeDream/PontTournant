@@ -37,7 +37,7 @@ export default function(props: PropsType){
           onPress={()=>props.onChange(i)}
           // Selected or not
           style={props.values[i] ? [lstyle.button, lstyle.selButton] : lstyle.button} key={i+'p'}>
-          <Text style={[styles.text,{color: props.values[i] ? theme.fg : theme.prim}]} key={i+'t'}>{day}</Text>
+          <Text style={[styles.text,{color: props.values[i] ? theme.fg : theme.titre}]} key={i+'t'}>{day}</Text>
         </Pressable>
       ))}
     </View>
