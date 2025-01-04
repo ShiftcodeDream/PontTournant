@@ -39,8 +39,8 @@ export class AppDatabase {
       //   id INTEGER PRIMARY KEY AUTOINCREMENT,
       //   tide_timestamp TEXT UNIQUE,
       //   last_notification TEXT DEFAULT NULL)`);
-      console.log(db.getAllSync("PRAGMA table_info(tide)"));
-      // console.log(db.getAllSync("SELECT * FROM time_range"));
+      // console.log(db.getAllSync("PRAGMA table_info(tide)"));
+      // console.log(db.getAllSync("SELECT * FROM tide"));
 
       const result = db.getFirstSync<{ user_version: number }>('PRAGMA user_version');
       let currentDbVersion = result?.user_version ?? 0;

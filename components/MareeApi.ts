@@ -1,5 +1,6 @@
 import {Dayjs}from "dayjs";
 import dayjs from "dayjs";
+import {TideDb} from "@/components/db/TidesDb";
 
 const url = 'https://www.horaire-maree.fr/maree/CHERBOURG/';
 
@@ -151,7 +152,7 @@ googletag.cmd.push(function() { googletag.display('div-gpt-ad-1542058859556-0');
                 	<h2>Cherbourg</h2>                </div>
                  <div id="i_header_tbl_droite">
                  <h3 class="orange">Marée aujourd'hui<br />
-                   mercredi 25 décembre 2024 </h3>
+                   vendredi  3 janvier 2025 </h3>
                  </div>
             </div>
             
@@ -170,12 +171,12 @@ googletag.cmd.push(function() { googletag.display('div-gpt-ad-1542058859556-0');
                 <th><strong>Pleine mer</strong></th>
               </tr>
               <tr class="bluesoftoffice">
-                <td class="blueoffice whitetxt"><strong>42</strong></td>
-                <td><strong>10h41</strong><br /> 2,90 m</td>
-                <td><strong>04h23</strong><br /> 4,94 m</td>
-                <td class="blueoffice whitetxt">42</td>
-                <td><strong>23h11</strong><br /> 2,71 m</td>
-                <td><strong>16h44</strong><br /> 4,91 m</td>
+                <td class="blueoffice whitetxt"><strong>85</strong></td>
+                <td><strong>05h21</strong><br /> 1,61 m</td>
+                <td><strong>10h45</strong><br /> 6,33 m</td>
+                <td class="blueoffice whitetxt">84</td>
+                <td><strong>17h46</strong><br /> 1,27 m</td>
+                <td><strong>23h14</strong><br /> 6,05 m</td>
               </tr>
             </table>
             </div>
@@ -202,112 +203,112 @@ googletag.cmd.push(function() { googletag.display('div-gpt-ad-1542058859556-0');
                 
                 
                 	<tr class="otheroffice">
-                		<td class="blueoffice whitetxt"><strong>Demain Jeudi 26 décembre</strong></td>
-        	        	<td><strong>44</strong></td>
-        	        	<td><strong>11h52</strong><br /> 2,78 m</td>
-        	        	<td><strong>05h22</strong><br /> 5,04 m</td>
-        	        	<td><strong>46</strong></td>
-        	        	<td><strong></strong><br /> </td>
-        	        	<td><strong>17h42</strong><br /> 5,01 m</td>
-        	        </tr>
-        	    
-                
-                	<tr class="bluesoftoffice">
-                		<td class="blueoffice whitetxt"><strong>Vendredi 27 décembre</strong></td>
-        	        	<td><strong>49</strong></td>
-        	        	<td><strong>00h15</strong><br /> 2,61 m</td>
-        	        	<td><strong>06h11</strong><br /> 5,22 m</td>
-        	        	<td><strong>52</strong></td>
-        	        	<td><strong>12h51</strong><br /> 2,56 m</td>
-        	        	<td><strong>18h32</strong><br /> 5,16 m</td>
-        	        </tr>
-        	    
-                
-                	<tr class="otheroffice">
-                		<td class="blueoffice whitetxt"><strong>Samedi 28 décembre</strong></td>
-        	        	<td><strong>55</strong></td>
-        	        	<td><strong>01h09</strong><br /> 2,44 m</td>
-        	        	<td><strong>06h55</strong><br /> 5,43 m</td>
-        	        	<td><strong>59</strong></td>
-        	        	<td><strong>13h40</strong><br /> 2,29 m</td>
-        	        	<td><strong>19h17</strong><br /> 5,36 m</td>
-        	        </tr>
-        	    
-                
-                	<tr class="bluesoftoffice">
-                		<td class="blueoffice whitetxt"><strong>Dimanche 29 décembre</strong></td>
-        	        	<td><strong>63</strong></td>
-        	        	<td><strong>01h56</strong><br /> 2,23 m</td>
-        	        	<td><strong>07h35</strong><br /> 5,65 m</td>
-        	        	<td><strong>67</strong></td>
-        	        	<td><strong>14h23</strong><br /> 2,00 m</td>
-        	        	<td><strong>19h57</strong><br /> 5,56 m</td>
-        	        </tr>
-        	    
-                
-                	<tr class="otheroffice">
-                		<td class="blueoffice whitetxt"><strong>Lundi 30 décembre</strong></td>
-        	        	<td><strong>71</strong></td>
-        	        	<td><strong>02h38</strong><br /> 2,02 m</td>
-        	        	<td><strong>08h12</strong><br /> 5,87 m</td>
-        	        	<td><strong>74</strong></td>
-        	        	<td><strong>15h05</strong><br /> 1,73 m</td>
-        	        	<td><strong>20h36</strong><br /> 5,76 m</td>
-        	        </tr>
-        	    
-                
-                	<tr class="bluesoftoffice">
-                		<td class="blueoffice whitetxt"><strong>Mardi 31 décembre</strong></td>
-        	        	<td><strong>77</strong></td>
-        	        	<td><strong>03h20</strong><br /> 1,83 m</td>
-        	        	<td><strong>08h50</strong><br /> 6,07 m</td>
-        	        	<td><strong>80</strong></td>
-        	        	<td><strong>15h44</strong><br /> 1,50 m</td>
-        	        	<td><strong>21h14</strong><br /> 5,92 m</td>
-        	        </tr>
-        	    
-                
-                	<tr class="otheroffice">
-                		<td class="blueoffice whitetxt"><strong>Mercredi  1 janvier</strong></td>
-        	        	<td><strong>82</strong></td>
-        	        	<td><strong>04h00</strong><br /> 1,69 m</td>
-        	        	<td><strong>09h26</strong><br /> 6,22 m</td>
-        	        	<td><strong>84</strong></td>
-        	        	<td><strong>16h24</strong><br /> 1,34 m</td>
-        	        	<td><strong>21h52</strong><br /> 6,04 m</td>
-        	        </tr>
-        	    
-                
-                	<tr class="bluesoftoffice">
-                		<td class="blueoffice whitetxt"><strong>Jeudi  2 janvier</strong></td>
-        	        	<td><strong>85</strong></td>
-        	        	<td><strong>04h40</strong><br /> 1,61 m</td>
-        	        	<td><strong>10h05</strong><br /> 6,32 m</td>
-        	        	<td><strong>85</strong></td>
-        	        	<td><strong>17h05</strong><br /> 1,26 m</td>
-        	        	<td><strong>22h32</strong><br /> 6,08 m</td>
-        	        </tr>
-        	    
-                
-                	<tr class="otheroffice">
-                		<td class="blueoffice whitetxt"><strong>Vendredi  3 janvier</strong></td>
-        	        	<td><strong>85</strong></td>
-        	        	<td><strong>05h21</strong><br /> 1,61 m</td>
-        	        	<td><strong>10h45</strong><br /> 6,33 m</td>
-        	        	<td><strong>84</strong></td>
-        	        	<td><strong>17h46</strong><br /> 1,27 m</td>
-        	        	<td><strong>23h14</strong><br /> 6,05 m</td>
-        	        </tr>
-        	    
-                
-                	<tr class="bluesoftoffice">
-                		<td class="blueoffice whitetxt"><strong>Samedi  4 janvier</strong></td>
+                		<td class="blueoffice whitetxt"><strong>Demain Samedi  4 janvier</strong></td>
         	        	<td><strong>82</strong></td>
         	        	<td><strong>06h04</strong><br /> 1,68 m</td>
         	        	<td><strong>11h28</strong><br /> 6,25 m</td>
         	        	<td><strong>80</strong></td>
         	        	<td><strong>18h30</strong><br /> 1,37 m</td>
         	        	<td><strong>23h59</strong><br /> 5,94 m</td>
+        	        </tr>
+        	    
+                
+                	<tr class="bluesoftoffice">
+                		<td class="blueoffice whitetxt"><strong>Dimanche  5 janvier</strong></td>
+        	        	<td><strong>77</strong></td>
+        	        	<td><strong>06h49</strong><br /> 1,82 m</td>
+        	        	<td><strong>12h15</strong><br /> 6,08 m</td>
+        	        	<td><strong>74</strong></td>
+        	        	<td><strong>19h16</strong><br /> 1,56 m</td>
+        	        	<td><strong></strong><br /> </td>
+        	        </tr>
+        	    
+                
+                	<tr class="otheroffice">
+                		<td class="blueoffice whitetxt"><strong>Lundi  6 janvier</strong></td>
+        	        	<td><strong>70</strong></td>
+        	        	<td><strong>07h37</strong><br /> 2,01 m</td>
+        	        	<td><strong>00h49</strong><br /> 5,76 m</td>
+        	        	<td><strong>66</strong></td>
+        	        	<td><strong>20h07</strong><br /> 1,81 m</td>
+        	        	<td><strong>13h07</strong><br /> 5,84 m</td>
+        	        </tr>
+        	    
+                
+                	<tr class="bluesoftoffice">
+                		<td class="blueoffice whitetxt"><strong>Mardi  7 janvier</strong></td>
+        	        	<td><strong>63</strong></td>
+        	        	<td><strong>08h34</strong><br /> 2,21 m</td>
+        	        	<td><strong>01h46</strong><br /> 5,55 m</td>
+        	        	<td><strong>60</strong></td>
+        	        	<td><strong>21h07</strong><br /> 2,06 m</td>
+        	        	<td><strong>14h09</strong><br /> 5,57 m</td>
+        	        </tr>
+        	    
+                
+                	<tr class="otheroffice">
+                		<td class="blueoffice whitetxt"><strong>Mercredi  8 janvier</strong></td>
+        	        	<td><strong>57</strong></td>
+        	        	<td><strong>09h40</strong><br /> 2,37 m</td>
+        	        	<td><strong>02h53</strong><br /> 5,38 m</td>
+        	        	<td><strong>57</strong></td>
+        	        	<td><strong>22h18</strong><br /> 2,24 m</td>
+        	        	<td><strong>15h22</strong><br /> 5,37 m</td>
+        	        </tr>
+        	    
+                
+                	<tr class="bluesoftoffice">
+                		<td class="blueoffice whitetxt"><strong>Jeudi  9 janvier</strong></td>
+        	        	<td><strong>56</strong></td>
+        	        	<td><strong>10h58</strong><br /> 2,39 m</td>
+        	        	<td><strong>04h07</strong><br /> 5,31 m</td>
+        	        	<td><strong>57</strong></td>
+        	        	<td><strong>23h36</strong><br /> 2,27 m</td>
+        	        	<td><strong>16h41</strong><br /> 5,30 m</td>
+        	        </tr>
+        	    
+                
+                	<tr class="otheroffice">
+                		<td class="blueoffice whitetxt"><strong>Vendredi 10 janvier</strong></td>
+        	        	<td><strong>58</strong></td>
+        	        	<td><strong>12h17</strong><br /> 2,22 m</td>
+        	        	<td><strong>05h21</strong><br /> 5,39 m</td>
+        	        	<td><strong>61</strong></td>
+        	        	<td><strong></strong><br /> </td>
+        	        	<td><strong>17h53</strong><br /> 5,39 m</td>
+        	        </tr>
+        	    
+                
+                	<tr class="bluesoftoffice">
+                		<td class="blueoffice whitetxt"><strong>Samedi 11 janvier</strong></td>
+        	        	<td><strong>64</strong></td>
+        	        	<td><strong>00h48</strong><br /> 2,14 m</td>
+        	        	<td><strong>06h24</strong><br /> 5,58 m</td>
+        	        	<td><strong>68</strong></td>
+        	        	<td><strong>13h23</strong><br /> 1,92 m</td>
+        	        	<td><strong>18h56</strong><br /> 5,56 m</td>
+        	        </tr>
+        	    
+                
+                	<tr class="otheroffice">
+                		<td class="blueoffice whitetxt"><strong>Dimanche 12 janvier</strong></td>
+        	        	<td><strong>72</strong></td>
+        	        	<td><strong>01h49</strong><br /> 1,92 m</td>
+        	        	<td><strong>07h20</strong><br /> 5,82 m</td>
+        	        	<td><strong>76</strong></td>
+        	        	<td><strong>14h19</strong><br /> 1,59 m</td>
+        	        	<td><strong>19h51</strong><br /> 5,76 m</td>
+        	        </tr>
+        	    
+                
+                	<tr class="bluesoftoffice">
+                		<td class="blueoffice whitetxt"><strong>Lundi 13 janvier</strong></td>
+        	        	<td><strong>80</strong></td>
+        	        	<td><strong>02h40</strong><br /> 1,69 m</td>
+        	        	<td><strong>08h08</strong><br /> 6,04 m</td>
+        	        	<td><strong>83</strong></td>
+        	        	<td><strong>15h07</strong><br /> 1,32 m</td>
+        	        	<td><strong>20h38</strong><br /> 5,93 m</td>
         	        </tr>
         	        
         	    </table>
@@ -331,12 +332,12 @@ googletag.cmd.push(function() { googletag.display('div-gpt-ad-1542058859556-0');
     		<div id="i_phare"> </div>
 
     		<div class="blueoffice box">
-    			<h2><a class="nolink" href="/grande-maree/CHERBOURG/">Grande Marée 2024<br /> Cherbourg</a></h2>
+    			<h2><a class="nolink" href="/grande-maree/CHERBOURG/">Grande Marée 2025<br /> Cherbourg</a></h2>
 
     			<p>
-          <a class="nolink" href="/grande-maree/CHERBOURG/" class="gdmaree" alt="Grandes mar&eacute;es 2024 CHERBOURG"  title="Grandes mar&eacute;es 2024 CHERBOURG"> 
+          <a class="nolink" href="/grande-maree/CHERBOURG/" class="gdmaree" alt="Grandes mar&eacute;es 2025 CHERBOURG"  title="Grandes mar&eacute;es 2025 CHERBOURG"> 
     			Cliquer ici pour ne plus les manquer<br />
-    			<br /><br />Calendrier des grandes marées de Cherbourg pour l’année 2024    		</a></p>
+    			<br /><br />Calendrier des grandes marées de Cherbourg pour l’année 2025    		</a></p>
 
     		</div>
 
@@ -407,9 +408,9 @@ googletag.cmd.push(function() { googletag.display('div-gpt-ad-1542058801090-0');
 
         <h3 class="clearer">Ports voisins de Cherbourg</h3>
 
-        <ul><li><a href='http://www.horaire-maree.fr/maree/Fermanville/'>Mar&eacute;e Fermanville</a></li><li><a href='http://www.horaire-maree.fr/maree/Maupertus-sur-Mer/'>Mar&eacute;e Maupertus-sur-mer</a></li><li><a href='http://www.horaire-maree.fr/maree/Bretteville-en-Saire/'>Mar&eacute;e Bretteville-en-saire</a></li><li><a href='http://www.horaire-maree.fr/maree/Digosville/'>Mar&eacute;e Digosville</a></li><li><a href='http://www.horaire-maree.fr/maree/Tourlaville/'>Mar&eacute;e Tourlaville</a></li><li><a href='http://www.horaire-maree.fr/maree/CHERBOURG/'>Mar&eacute;e Cherbourg</a></li><li><a href='http://www.horaire-maree.fr/maree/Equeurdreville-Hainneville/'>Mar&eacute;e Equeurdreville-hainneville</a></li><li><a href='http://www.horaire-maree.fr/maree/Querqueville/'>Mar&eacute;e Querqueville</a></li></ul>        <h3 class="clearer">Horaire Lever et  Coucher de soleil du 25/12/2024 &agrave; Cherbourg</h3>
+        <ul><li><a href='http://www.horaire-maree.fr/maree/Fermanville/'>Mar&eacute;e Fermanville</a></li><li><a href='http://www.horaire-maree.fr/maree/Maupertus-sur-Mer/'>Mar&eacute;e Maupertus-sur-mer</a></li><li><a href='http://www.horaire-maree.fr/maree/Bretteville-en-Saire/'>Mar&eacute;e Bretteville-en-saire</a></li><li><a href='http://www.horaire-maree.fr/maree/Digosville/'>Mar&eacute;e Digosville</a></li><li><a href='http://www.horaire-maree.fr/maree/Tourlaville/'>Mar&eacute;e Tourlaville</a></li><li><a href='http://www.horaire-maree.fr/maree/CHERBOURG/'>Mar&eacute;e Cherbourg</a></li><li><a href='http://www.horaire-maree.fr/maree/Equeurdreville-Hainneville/'>Mar&eacute;e Equeurdreville-hainneville</a></li><li><a href='http://www.horaire-maree.fr/maree/Querqueville/'>Mar&eacute;e Querqueville</a></li></ul>        <h3 class="clearer">Horaire Lever et  Coucher de soleil du 03/01/2025 &agrave; Cherbourg</h3>
         <p>Horaire Lever du soleil Cherbourg : 09:07<br />
-        Horaire Coucher du soleil Cherbourg : 17:07 <br />
+        Horaire Coucher du soleil Cherbourg : 17:15 <br />
         </p>
         <p>
         Profitez le plus longtemps possible des mar&eacute;es en consultant les horaires du lever et du coucher de soleil.
@@ -418,7 +419,7 @@ googletag.cmd.push(function() { googletag.display('div-gpt-ad-1542058801090-0');
 
         <h3 class="clearer">Actualit&eacute;s Mar&eacute;e Cherbourg</h3>
         <div id="boxActu">
-                </div>
+        <div class="news"><h4><a href="" >Marée noire en Crimée : deux semaines plus tard, la pollution s&#39;étend vers d&#39;autres plages</a> - 02/01/2025 06:50 </h4><p>Info Cherbourg Marée noire en Crimée deux semaines plus tard la pollution sétend vers dautres... Cherbourg....</p></div>        </div>
 
     </div>
     <div id="footer_couleur">
@@ -440,7 +441,8 @@ googletag.cmd.push(function() { googletag.display('div-gpt-ad-1542058801090-0');
 </html>
 `;
 
-export default function getMareeData(): Promise<Array<Dayjs>>{
+export default function getMareeData(): Promise<Dayjs[]>{
+  const tideDb = new TideDb();
   // Basic mockup
   return new Promise<string>((ok,ko) => ok(MOCKUP))
     .then(resp => {
@@ -478,7 +480,10 @@ export default function getMareeData(): Promise<Array<Dayjs>>{
           let pleineMer = today.hour(v[0]).minute(v[1]);
           if(pleineMer.isValid()) {
             result.push(pleineMer.add(-1, 'hour'));
+            tideDb.add(pleineMer.add(-1, 'hour'));
+
             result.push(pleineMer.add(1, 'hour'));
+            tideDb.add(pleineMer.add(1, 'hour'));
           }
         }
       }
@@ -529,11 +534,12 @@ function splitBetween(tagDebut:string, tagFin:string, texte:string): Array<strin
 }
 /**
  * Transforme une date "mercredi 30 janvier 2025" en date Dayjs
+ * marche aussi pour   "vendredi  3 janvier 2025" (deux espaces à la suite)
  * @param theDate
  */
 function fromTextualDate(theDate: string): Dayjs {
   const mois = ['','janvier','fevrier','mars','avril','mai','juin','juillet','aout','septembre','octobre','novembre','decembre'];
-  const v = theDate.trim().split(' ');
+  const v = theDate.trim().split(' ').filter(h=>h.length>0);
   const numMois = mois.indexOf(v[2].toLowerCase());
   return dayjs(v[3] + '-' + numMois + '-' + v[1]);
 }
