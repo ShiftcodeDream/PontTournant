@@ -14,6 +14,7 @@ import {computeTideDataFromWeb, fetchTidesFromWeb} from "@/api/Maree";
 import updateTides from "@/task/getTides";
 import {TideDb} from "@/components/db/TidesDb";
 import {TimeRangeDb} from "@/components/db/TimeRangeDb";
+import useNotification from "@/hooks/useNotification";
 
 export default function Index() {
   useEffect(refresh, []);
@@ -56,6 +57,7 @@ export default function Index() {
   }
 
   // TODO : remove
+  const  {isNotificationGranted, askNotificationPermission, sendScheduledNotification} = useNotification();
   function onFetch(){
     fetchTidesFromWeb()
       .then(txt=>console.log(txt))
@@ -74,8 +76,12 @@ export default function Index() {
   function onShowTimeRanges(){
     new TimeRangeDb().getAll().then(data => console.log(data));
   }
-  function onSendNotif(){
-    console.log('TODO');
+  async function onSendNotif(){
+    if(! (await isNotificationGranted()) && ! (await askNotificationPermission())){
+      console.error("Permission des notifications refusée");
+      return;
+    }
+    sendScheduledNotification("Pont tournant", "coucou !", dayjs().add(5,'second'));
   }
   // TODO : end remove
 
