@@ -1,5 +1,5 @@
 import {JSX, useEffect, useState} from "react";
-import {Animated, SafeAreaView, RefreshControl} from "react-native";
+import {Animated, SafeAreaView, RefreshControl, View} from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { LinearGradient } from 'expo-linear-gradient';
 import ScrollView = Animated.ScrollView;
@@ -9,6 +9,11 @@ import styles, {theme} from "@/components/GlobalStyle";
 import getMareeData from "@/components/MareeApi";
 import DayTitle from '@/components/DayTitle';
 import DisplayHour from "@/components/DisplayHour";
+import CustomButton from "@/components/ui/CustomButton";
+import {computeTideDataFromWeb, fetchTidesFromWeb} from "@/api/Maree";
+import updateTides from "@/task/getTides";
+import {TideDb} from "@/components/db/TidesDb";
+import {TimeRangeDb} from "@/components/db/TimeRangeDb";
 
 export default function Index() {
   useEffect(refresh, []);
@@ -50,6 +55,30 @@ export default function Index() {
     return result;
   }
 
+  // TODO : remove
+  function onFetch(){
+    fetchTidesFromWeb()
+      .then(txt=>console.log(txt))
+      .catch(e=>console.log(e));
+  }
+  function onApiGet(){
+    fetchTidesFromWeb()
+      .then(data=> console.log(computeTideDataFromWeb(data).map(d=>d.format("DD/MM/YYYY HH:mm"))));
+  }
+  function onRunTask(){
+    updateTides();
+  }
+  function onShowTides(){
+    new TideDb().getAll().then(data => console.log(data));
+  }
+  function onShowTimeRanges(){
+    new TimeRangeDb().getAll().then(data => console.log(data));
+  }
+  function onSendNotif(){
+    console.log('TODO');
+  }
+  // TODO : end remove
+
   return (
     <SafeAreaProvider>
       <SafeAreaView>
@@ -57,6 +86,18 @@ export default function Index() {
           <ScrollView contentContainerStyle={styles.container}
           refreshControl={<RefreshControl refreshing={loading} onRefresh={refresh} />}
           >
+
+            { /* TODO : remove */ }
+            <View style={{width: '100%', paddingVertical: 40, flexDirection:'row', justifyContent:'space-around', flexWrap:'wrap'}}>
+              <CustomButton type="primary" label="Fetch" onPress={onFetch} />
+              <CustomButton type="primary" label="API" onPress={onApiGet} />
+              <CustomButton type="primary" label="Update API" onPress={onRunTask} />
+              <CustomButton type="primary" label="Display tides" onPress={onShowTides} />
+              <CustomButton type="primary" label="Display time ranges" onPress={onShowTimeRanges} />
+              <CustomButton type="primary" label="send notif" onPress={onSendNotif} />
+            </View>
+            { /* TODO : end remove */ }
+
             {makeList(horaires)}
           </ScrollView>
         </LinearGradient>

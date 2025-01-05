@@ -4,6 +4,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import Toast, {BaseToast, ErrorToast} from "react-native-toast-message";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import dayjs from "dayjs";
+import {LinearGradient} from "expo-linear-gradient";
 
 import {clamp} from "@/components/Utils";
 import { ParamStorage } from "@/components/db/ParamStorage";
@@ -12,7 +13,6 @@ import styles, {theme} from "@/components/GlobalStyle";
 import RoundedButton from "@/components/ui/RoundedButton";
 import TimeRange from "@/components/TimeRange";
 import CustomButton from "@/components/ui/CustomButton";
-import {LinearGradient} from "expo-linear-gradient";
 
 export default function Config() {
   const [timing, setTiming] = useState('10');
@@ -101,9 +101,9 @@ export default function Config() {
       <SafeAreaView>
         <LinearGradient colors={[theme.bgfrom, theme.bgto]}>
           <View style={{height:'100%'}}>
-          <ScrollView contentContainerStyle={styles.container}>
-            <View style={styles.withSeparator} />
-            <View style={[lstyle.inline, styles.withSeparator]}>
+            <ScrollView contentContainerStyle={styles.container}>
+              <View style={styles.withSeparator} />
+              <View style={[lstyle.inline, styles.withSeparator]}>
                 <Text style={styles.text}>Me notifier avant que le pont tourne</Text>
                 <Switch
                   trackColor={{false: '#fff', true: '#fff'}}
@@ -111,39 +111,38 @@ export default function Config() {
                   onValueChange={toggleEnableNotif}
                   value={enableNotif}
                 />
-            </View>
-            {enableNotif && <>
-              <View style={[styles.withSeparator, {height: 60}]}>
-                <View style={lstyle.inline}>
-                  <Text style={[styles.text, {flexGrow:2, flexWrap:'nowrap'}]}>Délai en minutes</Text>
-                  <View style={[lstyle.inline, {flexShrink:5, justifyContent: 'flex-end'}]}>
-                    <RoundedButton label="-" onPress={decreaseTiming}/>
-                    <TextInput value={timing} onChangeText={changeTiming} keyboardType='numeric'
-                               style={[styles.input, {width: 40}]}/>
-                    <RoundedButton label="+" onPress={increaseTiming}/>
+              </View>
+              {enableNotif && <>
+                <View style={[styles.withSeparator, {height: 60}]}>
+                  <View style={lstyle.inline}>
+                    <Text style={[styles.text, {flexGrow:2, flexWrap:'nowrap'}]}>Délai en minutes</Text>
+                    <View style={[lstyle.inline, {flexShrink:5, justifyContent: 'flex-end'}]}>
+                      <RoundedButton label="-" onPress={decreaseTiming}/>
+                      <TextInput value={timing} onChangeText={changeTiming} keyboardType='numeric'
+                                 style={[styles.input, {width: 40}]}/>
+                      <RoundedButton label="+" onPress={increaseTiming}/>
+                    </View>
                   </View>
                 </View>
-              </View>
-              <View style={{paddingTop: 5}}>
+                <View style={{paddingTop: 5}}>
                   <CustomButton label="Ajouter" onPress={onAdd}
                                 icon={<MaterialIcons name="alarm-add" size={28} color={theme.fg}/>}/>
-              </View>
+                </View>
 
-              {ranges.length
-                &&
-                ranges.map(range => (
-                  <TimeRange range={range} onRefreshNeeded={refresh} key={range.id}/>
-                ))
+                {ranges.length &&
+                  ranges.map(range => (
+                    <TimeRange range={range} onRefreshNeeded={refresh} key={range.id}/>
+                  ))
                 ||
                   <View style={[styles.roundedContainer, {height: 120, flexDirection:'row', justifyContent:'center', alignItems:'center'}]}>
                     <Text style={[styles.text, {fontWeight:'bold'}]}>Aucune notification définie pour le moment.
                         Cliquez sur "Ajouter" pour en créer une.</Text>
                   </View>
-              }
-            </>}
+                }
+              </>}
 
-            <Toast config={toastConfig} />
-          </ScrollView>
+              <Toast config={toastConfig} />
+            </ScrollView>
           </View>
         </LinearGradient>
       </SafeAreaView>
