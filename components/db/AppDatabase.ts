@@ -1,6 +1,6 @@
 import {openDatabaseSync, SQLiteDatabase} from "expo-sqlite";
+import {DATABASE_NAME} from "@/components/params";
 
-const DATABASE_NAME='ExpoSQLiteStorage';
 const DATABASE_VERSION = 1;
 // Times in hour + minutes are stocked with the following formula :
 // hours*100 + minutes (hours from 0 to 23, minutes from 0 to 59)
@@ -60,9 +60,9 @@ export class AppDatabase {
    * Closes the database connection asynchronously.
    */
   async close(): Promise<void> {
-    if (this.db) {
-      await this.db.closeAsync();
-      this.db = null;
+    if (AppDatabase.db) {
+      await AppDatabase.db.closeAsync();
+      AppDatabase.db = null;
     }
   }
 

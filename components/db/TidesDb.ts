@@ -1,9 +1,8 @@
 import {AppDatabase} from "@/components/db/AppDatabase";
 import dayjs, {Dayjs} from "dayjs";
+import {DATE_FORMAT, TIMESTAMP_FORMAT} from "@/components/params";
 
-// Formats for internal Sqlite use
-const TIMESTAMP_FORMAT = "YYYY-MM-DD HH:mm:00";
-const DATE_FORMAT = "YYYY-MM-DD";
+
 /**
  * Object type
  */

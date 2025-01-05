@@ -1,13 +1,13 @@
 import {Dayjs} from "dayjs";
 import {extractBetween, fromTextualDate, splitBetween} from "@/components/Utils";
+import {TIDES_URL} from "@/components/params";
 
 /**
  * Fetches data from website.
  * Note that fetch used IS NOT expo-fetch
  */
 export function fetchTidesFromWeb(): Promise<string>{
-  const url = "https://www.horaire-maree.fr/maree/CHERBOURG/";
-  return fetch(url).then(rep => rep.text())
+  return fetch(TIDES_URL).then(rep => rep.text())
 }
 
 export function computeTideDataFromWeb(tidesData: string): Dayjs[]{
