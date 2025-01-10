@@ -14,6 +14,7 @@ import RoundedButton from "@/components/ui/RoundedButton";
 import TimeRange from "@/components/TimeRange";
 import CustomButton from "@/components/ui/CustomButton";
 import {debouncedUpdateNotifications} from "@/task/planNotifications";
+import useNotification from "@/lib/hooks/useNotification";
 
 export default function Config() {
   const [timing, setTiming] = useState('10');
@@ -22,6 +23,8 @@ export default function Config() {
   const TIME_MINI = 0;
   const TIME_MAXI = 120;
   const INCREMENT = 5;
+
+  const {isNotificationGranted, askNotificationPermission} = useNotification();
 
   const timeRangeDb = new TimeRangeDb();
 
@@ -43,9 +46,18 @@ export default function Config() {
   function toggleEnableNotif(){
     // TODO : vérifier les droits de notification. Si pas de droit, Toast d'avertissement + remettre à false
     setEnableNotif(v => {
-      ParamStorage.setItem('notificationEnabled', !v ? 'true' : 'false');
+      let newValue = !v;
+      if(newValue && !isNotificationGranted() && !askNotificationPermission()){
+        Toast.show({
+          type: "error",
+          text1: "Notifications refusées",
+          text2: "Les notifications ne sont pas autorisées",
+        });
+        newValue = false;
+      }
+      ParamStorage.setItem('notificationEnabled', newValue ? 'true' : 'false');
       debouncedUpdateNotifications();
-      return !v;
+      return newValue;
     })
   }
   function changeTiming(t: string) {
