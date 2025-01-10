@@ -1,6 +1,6 @@
 import {AppDatabase} from "@/components/db/AppDatabase";
 import dayjs, {Dayjs} from "dayjs";
-import {SQLITE_DATE_FORMAT, TIMESTAMP_FORMAT} from "@/components/params";
+import {SQLITE_DATE_FORMAT, TIMESTAMP_FORMAT} from "@/params";
 
 /**
  * Object type

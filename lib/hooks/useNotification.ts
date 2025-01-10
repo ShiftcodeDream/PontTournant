@@ -2,7 +2,7 @@ import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
 import {Dayjs} from "dayjs";
 import {SchedulableTriggerInputTypes} from "expo-notifications";
-import { NOTIF_CHANNEL_ID } from "@/components/params";
+import { NOTIF_CHANNEL_ID } from "@/params";
 export default function useNotification(){
   Notifications.setNotificationHandler({
     handleNotification: async () => ({

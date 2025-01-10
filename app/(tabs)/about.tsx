@@ -1,5 +1,5 @@
 import {Animated, SafeAreaView, Text, StyleSheet, StyleProp, TextStyle} from 'react-native';
-import styles, {theme} from "@/components/GlobalStyle";
+import styles, {theme} from "@/GlobalStyle";
 import {Link} from "expo-router";
 import {SafeAreaProvider} from "react-native-safe-area-context";
 import ScrollView = Animated.ScrollView;

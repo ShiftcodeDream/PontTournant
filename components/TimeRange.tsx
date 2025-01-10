@@ -5,7 +5,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import {LinearGradient} from "expo-linear-gradient";
 import dayjs from "dayjs";
 
-import styles, {theme} from "@/components/GlobalStyle";
+import styles, {theme} from "@/GlobalStyle";
 import CustomButton from "@/components/ui/CustomButton";
 import TimeSelector from "@/components/ui/TimeSelector";
 import DayOfWeekSelector from "@/components/DayOfWeekSelector";

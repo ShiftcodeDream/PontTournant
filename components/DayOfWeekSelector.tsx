@@ -1,7 +1,7 @@
 import React from "react";
 import {View, Text, StyleSheet, Pressable} from "react-native";
 
-import styles, {theme} from "@/components/GlobalStyle";
+import styles, {theme} from "@/GlobalStyle";
 
 type PropsType = {
   values: boolean[],

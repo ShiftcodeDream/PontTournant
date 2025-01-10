@@ -5,7 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import ScrollView = Animated.ScrollView;
 import dayjs, {Dayjs} from "dayjs";
 
-import styles, {theme} from "@/components/GlobalStyle";
+import styles, {theme} from "@/GlobalStyle";
 import DayTitle from '@/components/DayTitle';
 import DisplayHour from "@/components/DisplayHour";
 import CustomButton from "@/components/ui/CustomButton";
@@ -13,7 +13,7 @@ import {computeTideDataFromWeb, fetchTidesFromWeb, getTides} from "@/api/Maree";
 import updateTides from "@/task/getTides";
 import {TideDb} from "@/components/db/TidesDb";
 import {TimeRangeDb} from "@/components/db/TimeRangeDb";
-import useNotification from "@/hooks/useNotification";
+import useNotification from "@/lib/hooks/useNotification";
 
 export default function Index() {
   useEffect(()=> refresh(false), []);

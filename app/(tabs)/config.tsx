@@ -6,10 +6,10 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import dayjs from "dayjs";
 import {LinearGradient} from "expo-linear-gradient";
 
-import {clamp} from "@/components/Utils";
-import { ParamStorage } from "@/components/db/ParamStorage";
+import {clamp} from "@/Utils";
+import { ParamStorage } from "@/lib/ParamStorage";
 import {TimeRangeDb, TimeRangeType} from "@/components/db/TimeRangeDb";
-import styles, {theme} from "@/components/GlobalStyle";
+import styles, {theme} from "@/GlobalStyle";
 import RoundedButton from "@/components/ui/RoundedButton";
 import TimeRange from "@/components/TimeRange";
 import CustomButton from "@/components/ui/CustomButton";

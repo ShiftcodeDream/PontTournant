@@ -1,5 +1,5 @@
 import {Pressable, View, Text} from "react-native";
-import styles, {theme} from "@/components/GlobalStyle";
+import styles, {theme} from "@/GlobalStyle";
 
 type Props = {
   label?: string,

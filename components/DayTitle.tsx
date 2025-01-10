@@ -3,8 +3,8 @@ import {Dayjs} from "dayjs";
 import dayjs from "dayjs";
 import 'dayjs/locale/fr';
 
-import styles from "@/components/GlobalStyle";
-import {firstUpperCase} from "@/components/Utils";
+import styles from "@/GlobalStyle";
+import {firstUpperCase} from "@/Utils";
 
 dayjs.locale('fr');
 

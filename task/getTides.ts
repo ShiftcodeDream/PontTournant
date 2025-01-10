@@ -12,5 +12,4 @@ export default function updateTides(){
         db.add(tide);
       });
     });
-  db.deletePastTides();
 }

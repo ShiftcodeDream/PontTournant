@@ -1,9 +1,10 @@
 import {openDatabaseSync, SQLiteDatabase} from "expo-sqlite";
-import {DATABASE_NAME} from "@/components/params";
+import {DATABASE_NAME} from "@/params";
 
 const DATABASE_VERSION = 1;
 // Times in hour + minutes are stocked with the following formula :
 // hours*100 + minutes (hours from 0 to 23, minutes from 0 to 59)
+// table tide : id and last_notification fields are for potential future uses
 const MIGRATION_STATEMENT_TO_V1 : string[] = [
   `CREATE TABLE IF NOT EXISTS time_range (
     id INTEGER PRIMARY KEY AUTOINCREMENT,

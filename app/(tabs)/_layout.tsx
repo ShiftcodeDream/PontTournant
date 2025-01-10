@@ -1,7 +1,7 @@
 import { Tabs } from "expo-router";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import styles, { theme } from "@/components/GlobalStyle";
+import styles, { theme } from "@/GlobalStyle";
 
 export default function RootLayout() {
   return (

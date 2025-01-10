@@ -1,6 +1,6 @@
 import {Text, View, StyleSheet, StyleProp, TextStyle} from "react-native";
 import {Dayjs} from "dayjs";
-import styles from "@/components/GlobalStyle";
+import styles from "@/GlobalStyle";
 
 type Props = {
   heure: Dayjs,

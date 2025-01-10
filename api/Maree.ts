@@ -1,8 +1,8 @@
 import * as BackgroundFetch from 'expo-background-fetch';
 import {Dayjs} from "dayjs";
 
-import {extractBetween, fromTextualDate, splitBetween} from "@/components/Utils";
-import {TIDES_URL} from "@/components/params";
+import {extractBetween, fromTextualDate, splitBetween} from "@/Utils";
+import {TIDES_URL} from "@/params";
 import {TideDb} from "@/components/db/TidesDb";
 
 const { NoData, NewData, Failed } = BackgroundFetch.BackgroundFetchResult;
