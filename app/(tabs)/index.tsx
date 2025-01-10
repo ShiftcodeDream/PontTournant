@@ -13,7 +13,7 @@ import {computeTideDataFromWeb, fetchTidesFromWeb, getTides} from "@/api/Tides";
 import {TideDb} from "@/components/db/TidesDb";
 import {TimeRangeDb} from "@/components/db/TimeRangeDb";
 import useNotification from "@/lib/hooks/useNotification";
-import planNotifications from "@/task/planNotifications";
+import planNotifications, {debouncedUpdateNotifications} from "@/task/planNotifications";
 
 export default function Index() {
   useEffect(()=> refresh(false), []);
@@ -25,8 +25,11 @@ export default function Index() {
     getTides(fromWeb).then(data => {
       setHoraires(data);
       setLoading(false);
+      debouncedUpdateNotifications();
     }).catch(e=>console.error(e));
   }
+
+  setInterval(()=>refresh(false), 5 * 60000);
 
   function makeList(values: Array<Dayjs>): JSX.Element[] {
     let old = 0, next=false, nextDetected=false, actif=false;

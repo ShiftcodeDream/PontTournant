@@ -10,6 +10,7 @@ import CustomButton from "@/components/ui/CustomButton";
 import TimeSelector from "@/components/ui/TimeSelector";
 import DayOfWeekSelector from "@/components/DayOfWeekSelector";
 import {TimeRangeDb, TimeRangeType} from "@/components/db/TimeRangeDb";
+import {debouncedUpdateNotifications} from "@/task/planNotifications";
 
 type Props = {
   range: TimeRangeType,
@@ -33,11 +34,12 @@ export default function TimeRange({range, onRefreshNeeded}: Props) {
   useEffect(()=>{
     const data = {
       startTime: dayjs(start),
-      endTime: dayjs(end),
-      enabled: enabled,
-      weekDays: days
+      endTime:   dayjs(end),
+      enabled:   enabled,
+      weekDays:  days
     };
-    timeRangeDb.updateById(range.id, (data as TimeRangeType));
+    timeRangeDb.updateById(range.id, (data as TimeRangeType))
+      .then(()=>debouncedUpdateNotifications());
   },[start, end, enabled, days]);
 
   function chekcTimeCoherence(debut: Date, fin: Date): boolean{
@@ -77,7 +79,10 @@ export default function TimeRange({range, onRefreshNeeded}: Props) {
   }
 
   function onDelete(id: number){
-    timeRangeDb.deleteById(id).then(onRefreshNeeded);
+    timeRangeDb.deleteById(id).then(()=>{
+      onRefreshNeeded();
+      debouncedUpdateNotifications();
+    });
   }
   return (
     <View style={styles.roundedContainer}>

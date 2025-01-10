@@ -13,6 +13,7 @@ import styles, {theme} from "@/GlobalStyle";
 import RoundedButton from "@/components/ui/RoundedButton";
 import TimeRange from "@/components/TimeRange";
 import CustomButton from "@/components/ui/CustomButton";
+import {debouncedUpdateNotifications} from "@/task/planNotifications";
 
 export default function Config() {
   const [timing, setTiming] = useState('10');
@@ -40,17 +41,21 @@ export default function Config() {
     timeRangeDb.getAll().then(setRanges);
   }
   function toggleEnableNotif(){
+    // TODO : vérifier les droits de notification. Si pas de droit, Toast d'avertissement + remettre à false
     setEnableNotif(v => {
       ParamStorage.setItem('notificationEnabled', !v ? 'true' : 'false');
+      debouncedUpdateNotifications();
       return !v;
     })
   }
   function changeTiming(t: string) {
+    let tim: number;
     if(t === null || t.length === 0)
-      return;
-    let tim = parseInt(t);
+      tim = 0;
+    else
+      tim = parseInt(t);
     if(isNaN(tim))
-      return;
+      tim = 0
     configTiming(tim);
   }
 
@@ -58,6 +63,7 @@ export default function Config() {
     const tim = clamp(value, TIME_MINI, TIME_MAXI).toString();
     setTiming(tim);
     ParamStorage.setItem('notificationTiming', tim);
+    debouncedUpdateNotifications();
   }
 
   function increaseTiming(){
@@ -93,7 +99,10 @@ export default function Config() {
     const tr = {
       enabled: true, startTime:debut, endTime:fin, weekDays: day
     }
-    timeRangeDb.add(tr as TimeRangeType).then(refresh);
+    timeRangeDb.add(tr as TimeRangeType).then(()=>{
+      refresh();
+      debouncedUpdateNotifications();
+    });
   }
 
   return (
@@ -163,10 +172,6 @@ const lstyle = StyleSheet.create({
 });
 
 const toastConfig = {
-  /*
-    Overwrite 'success' type,
-    by modifying the existing `BaseToast` component
-  */
   success: (props) => (
     <BaseToast
       {...props}
@@ -184,10 +189,6 @@ const toastConfig = {
       }}
     />
   ),
-  /*
-    Overwrite 'error' type,
-    by modifying the existing `ErrorToast` component
-  */
   error: (props) => (
     <ErrorToast
       {...props}

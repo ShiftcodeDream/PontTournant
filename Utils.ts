@@ -86,3 +86,22 @@ export function getHourMinute(d: Dayjs): number{
   return d.hour()*100 + d.minute();
 }
 
+/**
+ * Debounces a function, so that even if it is called several times,
+ * it is executed only once after [delay] milliseconds
+ *
+ * @param func
+ * @param delay
+ */
+const debounce = (func, delay) => {
+  let timeoutId: NodeJS.Timeout;
+
+  return (...args) => {
+    clearTimeout(timeoutId);
+
+    timeoutId = setTimeout(
+      () => func.apply(this, args),
+      delay
+    );
+  };
+};

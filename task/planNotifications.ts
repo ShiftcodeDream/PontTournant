@@ -6,6 +6,7 @@ import {TIMESTAMP_FORMAT} from "@/params";
 import {ParamStorage} from "@/lib/ParamStorage";
 import {getHourMinute} from "@/Utils";
 import useNotification from "@/lib/hooks/useNotification";
+import {debounce} from "expo-dev-launcher/bundle/functions/debounce";
 
 /**
  * Computes when to send notifications according to user preferences time ranges defined
@@ -16,11 +17,15 @@ export default async function planNotifications(){
 
   // First cancels all already planed notifications
   await cancelAllNotifications();
-  // Only if parameter is enabled and notifications allowed
+
+  // Setup notifications only if parameter is enabled and notifications allowed
   if(await ParamStorage.getItem('notificationEnabled') !== "true" || !(await isNotificationGranted()))
     return BackgroundFetchResult.NoData;
+
   // Notifications are sent xxx minutes before the bridge operation (xxx=timeDelay parameter)
   const timeDelay = parseInt(await ParamStorage.getItem('notificationTiming') || '0');
+
+  // User preferences
   const timeRanges = (await new TimeRangeDb().getAllActive())
     .map((tr: TimeRangeType) => ({
       ...tr,
@@ -28,6 +33,8 @@ export default async function planNotifications(){
       fromHour: getHourMinute(tr.startTime),  // just numbers HHMM without date considerations
       toHour:   getHourMinute(tr.endTime)
     }));
+
+  // Tides
   const tides = (await new TideDb().getTides())
     .filter(d => d.isAfter(now))  // only future tides
     .map(d => ({
@@ -60,3 +67,8 @@ export default async function planNotifications(){
   });
   return BackgroundFetchResult.NewData;
 }
+
+/**
+ * Used to ask a re-computation of all notifications after a settings change
+ */
+export const debouncedUpdateNotifications = debounce(planNotifications, 10000);
