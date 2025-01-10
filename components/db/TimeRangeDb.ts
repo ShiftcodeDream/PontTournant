@@ -22,7 +22,7 @@ type sqlTimeRangeType = {
   enabled: number
 }
 
-const AllWeekDays = "lun,mar,mer,jeu,ven,sam,dim".split(',');
+export const AllWeekDays = "lun,mar,mer,jeu,ven,sam,dim".split(',');
 /**
  * SQLite database access to time_range table
  */

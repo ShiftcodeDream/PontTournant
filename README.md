@@ -1,19 +1,22 @@
 # Application Pont Tournant de Cherbourg
 
 Cette application fournit des informations sur les horaires de manoeuvre du pont tournant de Cherbourg-en-Cotentin
-Ce pont est susceptible de touner une heure avant et une heure après la pleine mer.
+Ce pont est susceptible de touner __une heure avant__ et __une heure après__ la pleine mer.
 Le pont ne tourne que si un bâteau se présente pour entrer ou sortir du bassin du commerce.
 
 ## Détails de l'architecture
 Application développée sous Expo React Native
-
+Config Node / npm utilisée:
+```
+- npm  10.1.0
+- node 20.9.0
+- adb  1.0.41
+- yarn 1.22.22
+```
 Une petite base de données SQLite est utilisée pour :
 - Sauvegarder les clé/valeurs des paramètres de l'application
 - Sauvegarder les créneaux d'alerte saisis par l'utilisateur
 - Garder hors ligne les horaires des marées
-
-Un mécanisme est mis en place pour permettre la mise à jour de la base de données en fonction de son état actuel
-(voir le code de la classe /components/db/AppDatabase )
 
 ## Structure de l'arborescence
 - /components : les composants de l'application

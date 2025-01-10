@@ -77,3 +77,12 @@ export function fromTextualDate(theDate: string): Dayjs {
   const numMois = mois.indexOf(v[2].toLowerCase());
   return dayjs(v[3] + '-' + numMois + '-' + v[1]);
 }
+
+/**
+ * Retourne l'heure et les minutes sous la forme d'un nombre HHMM
+ * @param d Dayjs contenant un timestamp complet
+ */
+export function getHourMinute(d: Dayjs): number{
+  return d.hour()*100 + d.minute();
+}
+

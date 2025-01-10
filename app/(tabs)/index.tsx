@@ -13,6 +13,7 @@ import {computeTideDataFromWeb, fetchTidesFromWeb, getTides} from "@/api/Tides";
 import {TideDb} from "@/components/db/TidesDb";
 import {TimeRangeDb} from "@/components/db/TimeRangeDb";
 import useNotification from "@/lib/hooks/useNotification";
+import planNotifications from "@/task/planNotifications";
 
 export default function Index() {
   useEffect(()=> refresh(false), []);
@@ -79,7 +80,15 @@ export default function Index() {
       console.error("Permission des notifications refusée");
       return;
     }
-    sendScheduledNotification("Pont tournant", "coucou !", dayjs().add(5,'second'));
+    let d = dayjs()
+    sendScheduledNotification(
+      "Pont tournant de Cherbourg",
+      "Le pont va tourner à " + d.format("HH") + "h" + d.format("mm dddd D MMMM")
+      , d.add(5,'second')
+    );
+  }
+  function onPlanNotif(){
+    planNotifications();
   }
   // TODO : end remove
 
@@ -98,7 +107,8 @@ export default function Index() {
               <CustomButton type="primary" label="Update API" onPress={onRunTask} />
               <CustomButton type="primary" label="Display tides" onPress={onShowTides} />
               <CustomButton type="primary" label="Display time ranges" onPress={onShowTimeRanges} />
-              <CustomButton type="primary" label="send notif" onPress={onSendNotif} />
+              <CustomButton type="primary" label="Send notif" onPress={onSendNotif} />
+              <CustomButton type="primary" label="Compute planned notif" onPress={onPlanNotif} />
             </View>
             { /* TODO : end remove */ }
 
