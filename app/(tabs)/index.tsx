@@ -9,8 +9,7 @@ import styles, {theme} from "@/GlobalStyle";
 import DayTitle from '@/components/DayTitle';
 import DisplayHour from "@/components/DisplayHour";
 import CustomButton from "@/components/ui/CustomButton";
-import {computeTideDataFromWeb, fetchTidesFromWeb, getTides} from "@/api/Maree";
-import updateTides from "@/task/getTides";
+import {computeTideDataFromWeb, fetchTidesFromWeb, getTides} from "@/api/Tides";
 import {TideDb} from "@/components/db/TidesDb";
 import {TimeRangeDb} from "@/components/db/TimeRangeDb";
 import useNotification from "@/lib/hooks/useNotification";
@@ -67,7 +66,7 @@ export default function Index() {
       .then(data=> console.log(computeTideDataFromWeb(data).map(d=>d.format("DD/MM/YYYY HH:mm"))));
   }
   function onRunTask(){
-    updateTides();
+    getTides(true);
   }
   function onShowTides(){
     new TideDb().getAll().then(data => console.log(data));

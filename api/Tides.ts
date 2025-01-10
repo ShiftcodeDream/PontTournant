@@ -1,17 +1,15 @@
-import * as BackgroundFetch from 'expo-background-fetch';
 import {Dayjs} from "dayjs";
 
 import {extractBetween, fromTextualDate, splitBetween} from "@/Utils";
 import {TIDES_URL} from "@/params";
 import {TideDb} from "@/components/db/TidesDb";
 
-const { NoData, NewData, Failed } = BackgroundFetch.BackgroundFetchResult;
 /**
- * Task to update tides information in background
- * @constructor
+ * ETL (Extract, Tranform and Load) tides from web to local database
+ * @returns number of tides found, or -1 if failed, or 0 if no data found
  */
-export default async function TideTask(){
-  let status = NoData;
+export async function downloadTides(): Promise<number>{
+  let status = 0;
   const tideDb = new TideDb();
   // Ménage dans les anciennes marées
   await tideDb.deletePastTides()
@@ -19,24 +17,22 @@ export default async function TideTask(){
     .then(computeTideDataFromWeb)
     .then(tides => {
       if(tides && tides.length){
-        status = NewData;
+        status = tides.length;
         tides.forEach(tide => tideDb.add(tide));
       }
     })
-    .catch(()=> status = Failed);
-
+    .catch(()=> status = -1);
   return status;
 }
-
 /**
  * Return tides
  *
- * @param fromWeb if true, fetch tides from web then return data
+ * @param fromWeb if true, fetches tides from web then return data
  * if false, returns data from local db
  */
 export function getTides(fromWeb: boolean): Promise<Dayjs[]>{
   if(fromWeb)
-    return TideTask().then(() => new TideDb().getTides());
+    return downloadTides().then(() => new TideDb().getTides());
   else
     return new TideDb().getTides();
 }
