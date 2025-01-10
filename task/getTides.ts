@@ -3,7 +3,8 @@ import {TideDb} from "@/components/db/TidesDb";
 
 const db = new TideDb();
 export default function updateTides(){
-  fetchTidesFromWeb()
+  db.deletePastTides()
+    .then(fetchTidesFromWeb)
     .then(computeTideDataFromWeb)
     .then(tides => {
       tides.forEach(tide => {

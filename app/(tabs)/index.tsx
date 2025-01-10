@@ -6,27 +6,26 @@ import ScrollView = Animated.ScrollView;
 import dayjs, {Dayjs} from "dayjs";
 
 import styles, {theme} from "@/components/GlobalStyle";
-import getMareeData from "@/components/MareeApi";
 import DayTitle from '@/components/DayTitle';
 import DisplayHour from "@/components/DisplayHour";
 import CustomButton from "@/components/ui/CustomButton";
-import {computeTideDataFromWeb, fetchTidesFromWeb} from "@/api/Maree";
+import {computeTideDataFromWeb, fetchTidesFromWeb, getTides} from "@/api/Maree";
 import updateTides from "@/task/getTides";
 import {TideDb} from "@/components/db/TidesDb";
 import {TimeRangeDb} from "@/components/db/TimeRangeDb";
 import useNotification from "@/hooks/useNotification";
 
 export default function Index() {
-  useEffect(refresh, []);
+  useEffect(()=> refresh(false), []);
   const [horaires, setHoraires] = useState(new Array<Dayjs>);
   const [loading, setLoading] = useState(false);
 
-  function refresh() {
+  function refresh(fromWeb = true) {
     setLoading(true);
-    getMareeData().then(data => {
+    getTides(fromWeb).then(data => {
       setHoraires(data);
       setLoading(false);
-    });
+    }).catch(e=>console.error(e));
   }
 
   function makeList(values: Array<Dayjs>): JSX.Element[] {

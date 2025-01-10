@@ -1,7 +1,6 @@
 import {AppDatabase} from "@/components/db/AppDatabase";
 import dayjs, {Dayjs} from "dayjs";
-import {DATE_FORMAT, TIMESTAMP_FORMAT} from "@/components/params";
-
+import {SQLITE_DATE_FORMAT, TIMESTAMP_FORMAT} from "@/components/params";
 
 /**
  * Object type
@@ -42,12 +41,19 @@ export class TideDb {
   async getAll(): Promise<TideType[]>{
     const db = AppDatabase.getInstance();
     return db.getAllAsync(
-      "SELECT * FROM tide ORDER BY TIMESTAMP(tide_timestamp)"
+      "SELECT * FROM tide ORDER BY DATETIME(tide_timestamp)"
     ).then(rep => {
-      // TODO : clean
-      // console.log(rep);
       return rep.map(TideDb.toTideDataType)
     });
+  }
+  /**
+   * Get tides hours only
+   */
+  async getTides(): Promise<Dayjs[]>{
+    const db = AppDatabase.getInstance();
+    return db.getAllAsync(
+      "SELECT tide_timestamp FROM tide ORDER BY DATETIME(tide_timestamp)"
+    ).then(rep => rep.map(t => dayjs(t.tide_timestamp,TIMESTAMP_FORMAT)));
   }
 
   /**
@@ -60,7 +66,7 @@ export class TideDb {
     day = day ?? dayjs();
     return db.getAllAsync(
       "SELECT * FROM tide WHERE last_notification IS NULL AND DATE(tide_timestamp)=DATE(?)",
-      day.format(DATE_FORMAT)
+      day.format(SQLITE_DATE_FORMAT)
     ).then(rep => rep.map(TideDb.toTideDataType));
   }
 
@@ -98,11 +104,10 @@ export class TideDb {
    * @param before
    */
   async deletePastTides(before?: Dayjs): Promise<void>{
-    before = before || dayjs();
+    before = before || dayjs().hour(0).minute(0).second(0);
     const db = AppDatabase.getInstance();
     await db.runAsync(
-      "DELETE FROM time_range WHERE DATE(tide_timestamp) < DATE(?)",
-      before.format(DATE_FORMAT)
+      "DELETE FROM tide WHERE DATETIME(tide_timestamp) < DATETIME(?)", before.format(TIMESTAMP_FORMAT)
     );
   }
 

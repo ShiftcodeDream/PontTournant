@@ -442,6 +442,7 @@ googletag.cmd.push(function() { googletag.display('div-gpt-ad-1542058801090-0');
 `;
 
 export default function getMareeData(): Promise<Dayjs[]>{
+  console.error ("not here!");
   const tideDb = new TideDb();
   // Basic mockup
   return new Promise<string>((ok,ko) => ok(MOCKUP))
