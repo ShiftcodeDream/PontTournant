@@ -32,6 +32,8 @@ export default function Index() {
   function refresh(fromWeb = true) {
     setLoading(true);
     getTides(fromWeb).then(data => {
+      if((!data || data.length === 0) && !fromWeb)
+        refresh(true);  // When no tide data stored in the device, tries to download from the web (first application launch)
       setHoraires(data);
       setLoading(false);
       debouncedUpdateNotifications();
