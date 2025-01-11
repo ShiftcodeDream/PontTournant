@@ -1,4 +1,6 @@
 import dayjs, {Dayjs} from "dayjs";
+import Toast from "react-native-toast-message";
+import { Notification } from "expo-notifications";
 
 /**
  * Returns string with first letter upper cased
@@ -105,3 +107,13 @@ const debounce = (func, delay) => {
     );
   };
 };
+
+export function displayNotification(notif: Notification){
+  const { content } = notif.request;
+  Toast.show({
+    type: 'info',
+    text1: content.title,
+    text2: content.body,
+    visibilityTime: 10000,
+  });
+}

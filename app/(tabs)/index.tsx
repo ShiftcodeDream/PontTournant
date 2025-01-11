@@ -1,8 +1,10 @@
 import {JSX, useEffect, useState} from "react";
 import {Animated, SafeAreaView, RefreshControl, View} from "react-native";
+import * as Notifications from "expo-notifications";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { LinearGradient } from 'expo-linear-gradient';
 import ScrollView = Animated.ScrollView;
+import Toast from "react-native-toast-message";
 import dayjs, {Dayjs} from "dayjs";
 
 import styles, {theme} from "@/GlobalStyle";
@@ -14,11 +16,18 @@ import {TideDb} from "@/components/db/TidesDb";
 import {TimeRangeDb} from "@/components/db/TimeRangeDb";
 import useNotification from "@/lib/hooks/useNotification";
 import planNotifications, {debouncedUpdateNotifications} from "@/task/planNotifications";
+import { displayNotification } from "@/Utils";
+import {toastConfig} from "@/params";
 
 export default function Index() {
-  useEffect(()=> refresh(false), []);
   const [horaires, setHoraires] = useState(new Array<Dayjs>);
   const [loading, setLoading] = useState(false);
+
+  useEffect(()=> {
+    refresh(false);
+    const subscription = Notifications.addNotificationReceivedListener(displayNotification);
+    return () => subscription.remove();
+  }, []);
 
   function refresh(fromWeb = true) {
     setLoading(true);
@@ -116,6 +125,7 @@ export default function Index() {
             { /* TODO : end remove */ }
 
             {makeList(horaires)}
+            <Toast config={toastConfig}/>
           </ScrollView>
         </LinearGradient>
       </SafeAreaView>

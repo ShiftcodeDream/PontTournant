@@ -1,14 +1,26 @@
+import {useEffect} from "react";
 import {Animated, SafeAreaView, Text, StyleSheet, StyleProp, TextStyle} from 'react-native';
 import styles, {theme} from "@/GlobalStyle";
 import {Link} from "expo-router";
 import {SafeAreaProvider} from "react-native-safe-area-context";
 import ScrollView = Animated.ScrollView;
 import {LinearGradient} from "expo-linear-gradient";
+import Toast from "react-native-toast-message";
+import * as Notifications from "expo-notifications";
+
+import {displayNotification} from "@/Utils";
+import {toastConfig} from "@/params";
 
 export default function AboutScreen() {
   const just: StyleProp<TextStyle> = StyleSheet.compose(styles.text,{
     textAlign: 'justify'
   });
+
+  useEffect(()=> {
+    const subscription = Notifications.addNotificationReceivedListener(displayNotification);
+    return () => subscription.remove();
+  }, []);
+
   return (
     <SafeAreaProvider>
       <SafeAreaView>
@@ -28,7 +40,7 @@ export default function AboutScreen() {
             <Text style={styles.titre}>A propos de l'application</Text>
             <Text style={just}>
               L'application Pont Tournant a été développée par Matthias Delamare sous licence Open Source. L'application envoie
-              une notification lorsqu'une manoeuvre du pont va avoir lieu. Vous pouvez choisir les périodes de temps qui vous intéresse
+              une notification lorsqu'une manoeuvre du pont va avoir lieu. Vous pouvez choisir les périodes de temps qui vous intéressent
               (moments où vous êtes susceptibles de traverser le pont). Vous pouvez aussi choisir combien de temps avant
               la manoeuvre vous souhaitez être prévenu(e).
             </Text>
@@ -42,6 +54,7 @@ export default function AboutScreen() {
                 https://github.com/ShiftcodeDream/PontTournant
               </Link>
             </Text>
+            <Toast config={toastConfig} />
           </ScrollView>
         </LinearGradient>
       </SafeAreaView>

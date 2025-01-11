@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from "react";
 import {Text, TextInput, View, StyleSheet, Switch, SafeAreaView, ScrollView} from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import Toast, {BaseToast, ErrorToast} from "react-native-toast-message";
+import Toast from "react-native-toast-message";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import dayjs from "dayjs";
 import {LinearGradient} from "expo-linear-gradient";
+import * as Notifications from "expo-notifications";
 
-import {clamp} from "@/Utils";
+import {clamp, displayNotification} from "@/Utils";
 import { ParamStorage } from "@/lib/ParamStorage";
 import {TimeRangeDb, TimeRangeType} from "@/components/db/TimeRangeDb";
 import styles, {theme} from "@/GlobalStyle";
@@ -15,6 +16,7 @@ import TimeRange from "@/components/TimeRange";
 import CustomButton from "@/components/ui/CustomButton";
 import {debouncedUpdateNotifications} from "@/task/planNotifications";
 import useNotification from "@/lib/hooks/useNotification";
+import {toastConfig} from "@/params";
 
 export default function Config() {
   const [timing, setTiming] = useState('10');
@@ -28,7 +30,11 @@ export default function Config() {
 
   const timeRangeDb = new TimeRangeDb();
 
-  useEffect(refresh, []);
+  useEffect(()=> {
+    refresh();
+    const subscription = Notifications.addNotificationReceivedListener(displayNotification);
+    return () => subscription.remove();
+  }, []);
 
   function refresh(){
     ParamStorage.getItem('notificationEnabled').then(r => {
@@ -182,40 +188,3 @@ const lstyle = StyleSheet.create({
     paddingRight: 10,
   },
 });
-
-const toastConfig = {
-  success: (props) => (
-    <BaseToast
-      {...props}
-      style={{
-        borderLeftColor: theme.success,
-        backgroundColor: theme.sec
-      }}
-      text1Style={{
-        fontSize: 18,
-        color: theme.bg,
-      }}
-      text2Style={{
-        fontSize: 16,
-        color: theme.bg,
-      }}
-    />
-  ),
-  error: (props) => (
-    <ErrorToast
-      {...props}
-      style={{
-        borderLeftColor: theme.danger,
-        backgroundColor: theme.sec
-      }}
-      text1Style={{
-        fontSize: 18,
-        color: theme.bg,
-      }}
-      text2Style={{
-        fontSize: 16,
-        color: theme.bg,
-      }}
-    />
-  ),
-};
