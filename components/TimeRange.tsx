@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {View, Text, Switch} from "react-native";
-import Toast from 'react-native-toast-message';
 import Ionicons from "@expo/vector-icons/Ionicons";
 import {LinearGradient} from "expo-linear-gradient";
 import dayjs from "dayjs";
@@ -11,6 +10,7 @@ import TimeSelector from "@/components/ui/TimeSelector";
 import DayOfWeekSelector from "@/components/DayOfWeekSelector";
 import {TimeRangeDb, TimeRangeType} from "@/components/db/TimeRangeDb";
 import {debouncedUpdateNotifications} from "@/task/planNotifications";
+import {getHourMinute} from "@/Utils";
 
 type Props = {
   range: TimeRangeType,
@@ -42,27 +42,15 @@ export default function TimeRange({range, onRefreshNeeded}: Props) {
       .then(()=>debouncedUpdateNotifications());
   },[start, end, enabled, days]);
 
-  function chekcTimeCoherence(debut: Date, fin: Date): boolean{
-    const d = debut.getHours()*100 + debut.getMinutes();
-    const f = fin.getHours()*100 + fin.getMinutes();
-    if(d < f) {
-      return true;
-    } else {
-      Toast.show({
-        type: "error",
-        text1: "Plage horaire incorrecte",
-        text2: "L'heure de fin est avant l'heure de début",
-      });
-      return false;
-    }
-  }
   function changeStartValue(event: Event, date: Date){
-    if(chekcTimeCoherence(date, end))
-      setStart(date);
+    setStart(date);
+    if(getHourMinute(dayjs(date)) > getHourMinute(dayjs(end)))
+      setEnd(dayjs(date).add(15,'minute').toDate());
   }
   function changeEndValue(event: Event, date: Date){
-    if(chekcTimeCoherence(start, date))
-      setEnd(date);
+    setEnd(date);
+    if(getHourMinute(dayjs(date)) < getHourMinute(dayjs(start)))
+      setStart(dayjs(date).subtract(15,'minute').toDate());
   }
   function toggleEnabled(){
     setEnabled(v=>!v);
