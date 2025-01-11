@@ -2,7 +2,6 @@ import { BackgroundFetchResult } from 'expo-background-fetch';
 import {AllWeekDays, TimeRangeDb, TimeRangeType} from "@/components/db/TimeRangeDb";
 import {TideDb} from "@/components/db/TidesDb";
 import dayjs from "dayjs";
-import {TIMESTAMP_FORMAT} from "@/params";
 import {ParamStorage} from "@/lib/ParamStorage";
 import {getHourMinute} from "@/Utils";
 import useNotification from "@/lib/hooks/useNotification";
@@ -58,10 +57,6 @@ export default async function planNotifications(){
             "Le pont va tourner à " + t.timest.format("HH") + "h" + t.timest.format("mm dddd D MMMM")
             , notifAt
           );
-          console.log({
-            notifAt: notifAt.format(TIMESTAMP_FORMAT),
-            manoeuvre: t.timest.format(TIMESTAMP_FORMAT)
-          })
         }
       });
   });

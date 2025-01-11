@@ -50,7 +50,6 @@ export default function Config() {
     timeRangeDb.getAll().then(setRanges);
   }
   function toggleEnableNotif(){
-    // TODO : vérifier les droits de notification. Si pas de droit, Toast d'avertissement + remettre à false
     setEnableNotif(v => {
       let newValue = !v;
       if(newValue && !isNotificationGranted() && !askNotificationPermission()){

@@ -34,15 +34,6 @@ export class AppDatabase {
   }
   private static maybeMigrateDbSync(db: SQLiteDatabase) {
     db.withTransactionSync(() => {
-      // TODO : clean
-      // db.runSync(`DROP TABLE tide`);
-      // db.runSync(`CREATE TABLE IF NOT EXISTS tide (
-      //   id INTEGER PRIMARY KEY AUTOINCREMENT,
-      //   tide_timestamp TEXT UNIQUE,
-      //   last_notification TEXT DEFAULT NULL)`);
-      // console.log(db.getAllSync("PRAGMA table_info(tide)"));
-      // console.log(db.getAllSync("SELECT * FROM tide"));
-
       const result = db.getFirstSync<{ user_version: number }>('PRAGMA user_version');
       let currentDbVersion = result?.user_version ?? 0;
       if (currentDbVersion >= DATABASE_VERSION) {

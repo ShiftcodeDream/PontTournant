@@ -50,8 +50,6 @@ export class TimeRangeDb {
     return db.getAllAsync(
       "SELECT * FROM time_range ORDER BY id DESC"
     ).then(rep => {
-      // TODO : clean
-      // console.log(rep);
       return rep.map(TimeRangeDb.toTimeRangeDataType)
     });
   }
