@@ -1,6 +1,8 @@
 import {BaseToast, ErrorToast} from "react-native-toast-message";
 import {theme} from "@/GlobalStyle";
+import packageJson from '@/package.json';
 
+export const APP_VERSION = packageJson.version;
 export const NOTIF_CHANNEL_ID = "Pont tournant";
 export const TIDES_URL = "https://www.horaire-maree.fr/maree/CHERBOURG/";
 export const DATABASE_NAME = "ExpoSQLiteStorage";

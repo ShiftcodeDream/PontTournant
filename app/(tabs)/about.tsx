@@ -9,7 +9,7 @@ import Toast from "react-native-toast-message";
 import * as Notifications from "expo-notifications";
 
 import {displayNotification} from "@/Utils";
-import {toastConfig} from "@/params";
+import {APP_VERSION, toastConfig} from "@/params";
 
 export default function AboutScreen() {
   const just: StyleProp<TextStyle> = StyleSheet.compose(styles.text,{
@@ -39,20 +39,30 @@ export default function AboutScreen() {
             </Text>
             <Text style={styles.titre}>A propos de l'application</Text>
             <Text style={just}>
-              L'application Pont Tournant a été développée par Matthias Delamare sous licence Open Source. L'application envoie
+              L'application envoie
               une notification lorsqu'une manoeuvre du pont va avoir lieu. Vous pouvez choisir les périodes de temps qui vous intéressent
               (moments où vous êtes susceptibles de traverser le pont). Vous pouvez aussi choisir combien de temps avant
               la manoeuvre vous souhaitez être prévenu(e).
             </Text>
-            <Text style={just}>
+            <Text style={[just, styles.withSeparator, {borderColor: theme.fg}]}>
               Les informations données ici le sont à titre informative. L'auteur de l'application ne peut être responsable
               de la qualité des prédictions, ni des conséquences de l'utilisation de cette application.
             </Text>
-            <Link href="http://mdelamare.free.fr" style={styles.link}>http://mdelamare.free.fr</Link>
             <Text style={just}>
-              Github : <Link href="https://github.com/ShiftcodeDream/PontTournant" style={styles.link}>
+              Application développée par Matthias Delamare sous licence Open Source.
+            </Text>
+            <Text style={styles.text}>
+              Website <Link href="http://mdelamare.free.fr" style={styles.link}>
+                http://mdelamare.free.fr
+              </Link>
+            </Text>
+            <Text style={styles.text}>
+              Github <Link href="https://github.com/ShiftcodeDream/PontTournant" style={styles.link}>
                 https://github.com/ShiftcodeDream/PontTournant
               </Link>
+            </Text>
+            <Text style={styles.text}>
+              Version {APP_VERSION}
             </Text>
             <Toast config={toastConfig} />
           </ScrollView>

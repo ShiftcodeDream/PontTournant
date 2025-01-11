@@ -14,7 +14,6 @@ const t = {
   warning : '#e39e3f',
   danger  : '#dd46ad',
   success : '#2da823',
-  link    : '#9a61bf',
 }
 export const theme = t;
 
@@ -68,7 +67,7 @@ export default StyleSheet.create({
   },
   link: {
     fontSize: 16,
-    color: t.link,
+    color: t.titre,
   },
   // Champs de saisie de texte
   input: {
