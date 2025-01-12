@@ -16,7 +16,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.PontTournant"
+      "package": "com.shiftcode.PontTournant"
     },
     "web": {
       "bundler": "metro",
