@@ -1,7 +1,7 @@
 import {JSX, useEffect, useState} from "react";
-import {Animated, SafeAreaView, RefreshControl} from "react-native";
+import {Animated, SafeAreaView, RefreshControl, View} from "react-native";
 import * as Notifications from "expo-notifications";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import {SafeAreaProvider} from "react-native-safe-area-context";
 import { LinearGradient } from 'expo-linear-gradient';
 import ScrollView = Animated.ScrollView;
 import Toast from "react-native-toast-message";
@@ -18,6 +18,7 @@ import {toastConfig} from "@/params";
 export default function Index() {
   const [horaires, setHoraires] = useState(new Array<Dayjs>);
   const [loading, setLoading] = useState(false);
+  const [liste, setListe] = useState(new Array<JSX.Element>);
 
   useEffect(()=> {
     refresh(false);
@@ -37,12 +38,13 @@ export default function Index() {
   }
 
   setInterval(()=>refresh(false), 5 * 60000);
+  useEffect(makeList, [horaires]);
 
-  function makeList(values: Array<Dayjs>): JSX.Element[] {
+  function makeList() {
     let old = 0, next=false, nextDetected=false, actif=false;
     const now = dayjs();
     let result: JSX.Element[] = [];
-    values.forEach((v,i) => {
+    horaires.forEach((v,i) => {
       // Date change detection
       if(old != v.get('date')) {
         result.push(
@@ -62,7 +64,7 @@ export default function Index() {
         <DisplayHour heure={v} key={'h'+i} actif={actif} next={next}/>
       );
     });
-    return result;
+    setListe(result);
   }
 
   return (
@@ -72,7 +74,10 @@ export default function Index() {
           <ScrollView contentContainerStyle={styles.container}
           refreshControl={<RefreshControl refreshing={loading} onRefresh={refresh} />}
           >
-            {makeList(horaires)}
+            {liste!==null && liste.length
+              && liste
+              || <View style={{height: 4000}} />
+            }
             <Toast config={toastConfig}/>
           </ScrollView>
         </LinearGradient>
