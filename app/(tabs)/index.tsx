@@ -26,8 +26,14 @@ export default function Index() {
     return () => subscription.remove();
   }, []);
 
-  function refresh(fromWeb = true) {
-    setLoading(true);
+  /**
+   * Refreshes data
+   *
+   * @param fromWeb if true: download data from web. If alse : update data from local database only
+   * @param displayLoading wether to display the "loading" spinner
+   */
+  function refresh(fromWeb = true, displayLoading = true) {
+    setLoading(displayLoading);
     getTides(fromWeb).then(data => {
       if((!data || data.length === 0) && !fromWeb)
         refresh(true);  // When no tide data stored in the device, tries to download from the web (first application launch)
@@ -37,7 +43,7 @@ export default function Index() {
     }).catch(e=>console.error(e));
   }
 
-  setInterval(()=>refresh(false), 5 * 60000);
+  setInterval(()=>refresh(false, false), 5 * 60000);
   useEffect(makeList, [horaires]);
 
   function makeList() {
