@@ -1,6 +1,5 @@
-import {useEffect} from "react";
-import {Animated, SafeAreaView, Text, StyleSheet, StyleProp, TextStyle} from 'react-native';
-import styles, {theme} from "@/GlobalStyle";
+import {useEffect, useState} from "react";
+import {Animated, SafeAreaView, Text, StyleSheet, StyleProp, TextStyle, Pressable} from 'react-native';
 import {Link} from "expo-router";
 import {SafeAreaProvider} from "react-native-safe-area-context";
 import ScrollView = Animated.ScrollView;
@@ -8,10 +7,12 @@ import {LinearGradient} from "expo-linear-gradient";
 import Toast from "react-native-toast-message";
 import * as Notifications from "expo-notifications";
 
+import styles, {theme} from "@/GlobalStyle";
 import {displayNotification} from "@/Utils";
 import {APP_VERSION, toastConfig} from "@/params";
 
 export default function AboutScreen() {
+  const [hideCtr, setHideCtr] = useState(4);
   const just: StyleProp<TextStyle> = StyleSheet.compose(styles.text,{
     textAlign: 'justify'
   });
@@ -65,9 +66,14 @@ export default function AboutScreen() {
                 https://github.com/ShiftcodeDream/PontTournant
               </Link>
             </Text>
-            <Text style={styles.text}>
-              Version {APP_VERSION}
-            </Text>
+            <Pressable onPress={()=>setHideCtr(c=> c-1)}>
+              <Text style={styles.text}>Version {APP_VERSION}</Text>
+            </Pressable>
+            { hideCtr<0 && (
+              <Text style={just}>
+                <Link href="/displayLogs">Voir les logs</Link>
+              </Text>
+            )}
             <Toast config={toastConfig} />
           </ScrollView>
         </LinearGradient>

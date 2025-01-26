@@ -18,6 +18,10 @@ Une petite base de données SQLite est utilisée pour :
 - Sauvegarder les créneaux d'alerte saisis par l'utilisateur
 - Garder hors ligne les horaires des marées
 
+## Logs masquées
+Sur l'écran "infos", scroller tout en bas de l'écran et appuyer 5 fois sur le numéro de version.
+Scroller pour voir apparaître un bouton "Voir les logs"
+
 ## Structure de l'arborescence
 - /components : les composants de l'application
 - /components/db : les classes d'accès à la base de données

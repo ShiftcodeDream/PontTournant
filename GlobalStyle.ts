@@ -116,5 +116,18 @@ export default StyleSheet.create({
     width: '100%',
     borderBottomColor: t.bg,
     borderBottomWidth: 2,
-  }
+  },
+  // Tableaux
+  tableRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 2
+  },
+  fixedText: {
+    color: t.fg,
+    fontFamily: 'Courier',
+    fontSize: 16,
+    paddingVertical: 0,
+    paddingHorizontal: 5
+  },
 });
